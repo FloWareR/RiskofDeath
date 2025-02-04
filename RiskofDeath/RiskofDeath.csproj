@@ -30,8 +30,4 @@
 		<PackageReference Include="MMHOOK.RoR2" Version="2024.11.4" NoWarn="NU1701" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Items\Void\" />
-	</ItemGroup>
-
 </Project>

@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiskofDeath", "RiskofDeath\RiskofDeath.csproj", "{2F8A40CC-6D15-486D-B689-0A7A472DB89E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{936B5FA5-52DE-4953-A1D1-3BAE2CA4E676}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\Unity\Ror2BundleMaker\Assets\AssetBundles\import = ..\..\..\Unity\Ror2BundleMaker\Assets\AssetBundles\import
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

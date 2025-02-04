@@ -2,6 +2,9 @@
 using R2API;
 using UnityEngine.AddressableAssets;
 using RoR2.ExpansionManagement;
+using On.RoR2.Items;
+using System;
+using HarmonyLib;
 namespace RiskofDeath.Items
 
 {
@@ -18,6 +21,7 @@ namespace RiskofDeath.Items
         public virtual void Init()
         {
             SetLangToken();
+            AddToPool();
             Hook();
         }
 
@@ -33,7 +37,30 @@ namespace RiskofDeath.Items
             LanguageAPI.Add(ItemData.pickupToken, ItemPick);
             LanguageAPI.Add(ItemData.descriptionToken, ItemDesc);
             LanguageAPI.Add(ItemData.loreToken, ItemLore);
+        }
 
+        protected void SetupCorruption()
+        {
+            var tier = ItemData.tier.ToString();
+            ItemData._itemTierDef = Addressables.LoadAssetAsync<ItemTierDef>($"RoR2/DLC1/Common/{tier}Def.asset").WaitForCompletion();
+            ContagiousItemManager.Init += SetTransformation;
+        }
+
+        private void SetTransformation(ContagiousItemManager.orig_Init orig)
+        {
+
+            ItemDef.Pair transformation = new ItemDef.Pair()
+            {
+                itemDef1 = ItemToCorrupt,
+                itemDef2 = ItemData
+            };
+            ItemCatalog.itemRelationships[DLC1Content.ItemRelationshipTypes.ContagiousItem] =
+                ItemCatalog.itemRelationships[DLC1Content.ItemRelationshipTypes.ContagiousItem].AddToArray(transformation);
+            orig();
+        }
+
+        protected void AddToPool()
+        {
             ItemAPI.Add(new CustomItem(ItemData, new ItemDisplayRuleDict(null)));
         }
 
