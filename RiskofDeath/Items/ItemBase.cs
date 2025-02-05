@@ -5,6 +5,7 @@ using RoR2.ExpansionManagement;
 using On.RoR2.Items;
 using System;
 using HarmonyLib;
+using UnityEngine;
 namespace RiskofDeath.Items
 
 {
@@ -17,11 +18,17 @@ namespace RiskofDeath.Items
         public abstract string ItemDesc { get; }
         public abstract string ItemLore { get; }
         public abstract ItemDef ItemToCorrupt { get; }
+        public abstract float logbookCameraMinDistance { get; }
+        public abstract float logbookCameraMaxDistance { get; }
+        public abstract Vector3 logbookFocusPointOffset { get; }
+        public abstract Vector3 logbookCameraPositionOffset { get; }
+
 
         public virtual void Init()
         {
             SetLangToken();
-            AddToPool();
+            SetupItem();
+            SetupCorruption();
             Hook();
         }
 
@@ -41,6 +48,7 @@ namespace RiskofDeath.Items
 
         protected void SetupCorruption()
         {
+            if(!ItemToCorrupt) return;
             var tier = ItemData.tier.ToString();
             ItemData._itemTierDef = Addressables.LoadAssetAsync<ItemTierDef>($"RoR2/DLC1/Common/{tier}Def.asset").WaitForCompletion();
             ContagiousItemManager.Init += SetTransformation;
@@ -59,8 +67,32 @@ namespace RiskofDeath.Items
             orig();
         }
 
-        protected void AddToPool()
+        protected void SetupItem()
         {
+            if (ItemData.pickupModelPrefab != null)
+            {
+                if (!ItemData.pickupModelPrefab.TryGetComponent<ModelPanelParameters>(out var modelParams))
+                {
+                    modelParams = ItemData.pickupModelPrefab.AddComponent<ModelPanelParameters>();
+                    modelParams.minDistance = logbookCameraMinDistance;
+                    modelParams.maxDistance = logbookCameraMaxDistance;
+                }
+
+                if (!modelParams.focusPointTransform)
+                {
+                    modelParams.focusPointTransform = new GameObject("FocusPoint").transform;
+                    modelParams.focusPointTransform.SetParent(ItemData.pickupModelPrefab.transform);
+                    modelParams.focusPointTransform.localPosition += logbookFocusPointOffset;
+                }
+
+                if (!modelParams.cameraPositionTransform)
+                {
+                    modelParams.cameraPositionTransform = new GameObject("CameraPosition").transform;
+                    modelParams.cameraPositionTransform.SetParent(ItemData.pickupModelPrefab.transform);
+                    modelParams.cameraPositionTransform.localPosition += logbookCameraPositionOffset;
+                }
+            }
+
             ItemAPI.Add(new CustomItem(ItemData, new ItemDisplayRuleDict(null)));
         }
 

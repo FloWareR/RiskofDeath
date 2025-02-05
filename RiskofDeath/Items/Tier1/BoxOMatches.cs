@@ -1,4 +1,5 @@
 ﻿using RoR2;
+using UnityEngine;
 
 namespace RiskofDeath.Items.Tier1
 {
@@ -12,12 +13,19 @@ namespace RiskofDeath.Items.Tier1
         public override string ItemDesc => "5% chance (+5% per stack) to set enemies on fire for 2 seconds (+0.5s per stack), dealing 10% base damage.";
         public override string ItemLore => "An old, half-empty box of matches. Each one a spark waiting to ignite chaos.";
         public override ItemDef ItemToCorrupt => null;
+        public override float logbookCameraMinDistance => 1f;
+        public override float logbookCameraMaxDistance => 10f;
+        public override Vector3 logbookFocusPointOffset => Vector3.zero;
+        public override Vector3 logbookCameraPositionOffset => Vector3.zero;
+
+
 
         //Item specifics
         private ItemDef _ignitionTank;
         private const float BaseBurnDuration = 1.5f;
         private const float BaseBurnStackIncrease = 0.5f;
         private const float BaseDamageMultiplier = 0.1f;
+
 
         public override void Init()
         {

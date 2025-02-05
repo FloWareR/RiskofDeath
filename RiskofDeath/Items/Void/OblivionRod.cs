@@ -16,26 +16,20 @@ namespace RiskofDeath.Items.Void
         public override string ItemDesc => "Deals bonus damage to enemies above 90% health, Enemies will take 1 damage and the rest will be accumulated and applied 1.5s after the initial hit <color=#ed7fcd>Corrupts all crowbars </color>";
         public override string ItemLore => "A twisted and rusty crowbar, infused with the power of the void";
         public override ItemDef ItemToCorrupt => RoR2Content.Items.Crowbar;
+        public override float logbookCameraMinDistance => 5f;
+        public override float logbookCameraMaxDistance => 30f;
+
+        public override Vector3 logbookFocusPointOffset => new Vector3(0, 2.5f, 0);
+
+        public override Vector3 logbookCameraPositionOffset => new Vector3(0, 2.5f, 0);
+
 
 
         //Item Specifics
         private static readonly float maxAllowedTime = 1.5f;
         private static readonly Dictionary<HealthComponent, EnemyState> enemyStates = new Dictionary<HealthComponent, EnemyState>();
-        private class EnemyState
-        {
-            public float accumulatedDamage; 
-            public Coroutine damageCoroutine; 
-        }
+        private class EnemyState { public float accumulatedDamage; public Coroutine damageCoroutine;  }
 
-
-
-        public override void Init()
-        {
-            SetLangToken();
-            AddToPool();
-            SetupCorruption();
-            Hook();
-        }
 
         public override void Hook()
         {
