@@ -1,6 +1,7 @@
 ﻿using RoR2;
 using System.Net.Mail;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using static UnityEngine.UI.Image;
 
@@ -12,7 +13,7 @@ namespace RiskofDeath.Items.Void
         public override string ItemIdentifier => "DisperseObsidian";
         public override string ItemName => "Disperse Obsidian";
         public override string ItemPick => "Deal bonus damage to enemies at long distance. <color=#ed7fcd>Corrupts all Focus Crystals </color>";
-        public override string ItemDesc => "Grants a damage boost against enemies at long range. Displays a pulsating effect around the player. <color=#ed7fcd>Corrupts all Focus Crystals </color>";
+        public override string ItemDesc => "Grants a damage boost against enemies at long range (29.9m). Displays a pulsating effect around the player. <color=#ed7fcd>Corrupts all Focus Crystals </color>";
         public override string ItemLore => "A shard that resonates with the distant echoes of battle.";
         public override ItemDef ItemToCorrupt => RoR2Content.Items.NearbyDamageBonus;
         public override float logbookCameraMinDistance => 5f;
@@ -26,6 +27,7 @@ namespace RiskofDeath.Items.Void
         private GameObject ringEffect;
         private GameObject ringPrefab;
         private const float ringScaleMultiplier = 2.3f;
+        private GameObject effect;
 
         public override void Hook()
         {
@@ -43,9 +45,15 @@ namespace RiskofDeath.Items.Void
         private void LoadPrefab()
         {
             if (ringPrefab) return;
+
             ringEffect = LegacyResourcesAPI.Load<GameObject>("Prefabs/NetworkedObjects/NearbyDamageBonusIndicator");
-            if(!ringPrefab) return;
-            Debug.Log("Loaded ringEffect");
+            if (ringPrefab) {
+                Debug.LogWarning("Loaded ringEffect");
+            }
+            else
+            {
+                Debug.LogWarning("NO HAY PREFAB");
+            }
         }
 
         private void OnInventoryChanged(On.RoR2.CharacterMaster.orig_OnInventoryChanged orig, CharacterMaster self)
@@ -53,30 +61,31 @@ namespace RiskofDeath.Items.Void
             orig(self);
             if (!self.inventory) return;
             var itemCount = self.inventory.GetItemCount(ItemData);
-            if (itemCount <= 0)
-            {
-                DestroyRing();
-            } else 
+            if (itemCount > 0)
             {
                 CreateRing(self);
-            }
 
+            }
+            else
+            {
+                DestroyRing();
+            }
         }
 
         private void CreateRing(CharacterMaster self)
         {
-            if (ringEffect || !ringPrefab) return;
-            ringEffect = GameObject.Instantiate(ringPrefab, self.GetBody().corePosition, Quaternion.identity);
-            if (!ringEffect) return;
-            if(!ringEffect.TryGetComponent(out NetworkIdentity netId))
-            {
-                netId = ringEffect.AddComponent<NetworkIdentity>();
-            }
-            var attachment = ringEffect.GetComponent<NetworkedBodyAttachment>();
+            //ringEffect = GameObject.Instantiate(ringPrefab, self.GetBody().corePosition, Quaternion.identity);
+            //if (!ringEffect) return;
+            //Debug.Log("Creating Ring");
+            //if (!ringEffect.TryGetComponent(out NetworkIdentity netId))
+            //{
+            //    netId = ringEffect.AddComponent<NetworkIdentity>();
+            //}
+            //var attachment = ringEffect.GetComponent<NetworkedBodyAttachment>();
 
-            ringEffect.transform.localScale *= ringScaleMultiplier;
-            ringEffect.transform.SetParent(self.transform, true);
-            attachment.AttachToGameObjectAndSpawn(self.gameObject, null);
+            //ringEffect.transform.localScale *= ringScaleMultiplier;
+            //ringEffect.transform.SetParent(self.transform, true);
+            //attachment.AttachToGameObjectAndSpawn(self.gameObject, null);
         }
 
         private void DestroyRing()

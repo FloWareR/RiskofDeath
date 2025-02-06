@@ -11,9 +11,6 @@ namespace RiskofDeath
 {
     [BepInDependency(ItemAPI.PluginGUID)]
     [BepInDependency(LanguageAPI.PluginGUID)]
-
-    [BepInDependency("com.TheTimesweeper.RedAlert", BepInDependency.DependencyFlags.SoftDependency)]
-
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
 
@@ -25,9 +22,11 @@ namespace RiskofDeath
         public const string PluginVersion = "0.1.0";
 
         public static AssetBundle Assets;
-        public static ItemLoader ItemLoader;
         public static ExpansionDef riskofdeathExpansion;
         private static ExpansionDef survivorsofthevoidDlc = Addressables.LoadAssetAsync<ExpansionDef>("RoR2/DLC1/Common/DLC1.asset").WaitForCompletion();
+
+        public static ItemLoader ItemLoader;
+        public static BuffLoader BuffLoader;
 
         public void Awake()
         {
@@ -35,6 +34,7 @@ namespace RiskofDeath
             LoadResources();
             LoadExpansion();
             LoadItems();
+            LoadBuffs();
         }
 
         private void LoadResources()
@@ -57,6 +57,12 @@ namespace RiskofDeath
         {
             ItemLoader = new ItemLoader();
             ItemLoader.Init();
+        }
+
+        private void LoadBuffs()
+        {
+            BuffLoader = new BuffLoader();
+            BuffLoader.Init();
         }
 
         private void OnDestroy()

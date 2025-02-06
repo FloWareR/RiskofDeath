@@ -76,6 +76,8 @@ namespace RiskofDeath.Items.Void
                     GameObject coroutineObject = new GameObject("OblivionRodCoroutine");
                     MonoBehaviour mb = coroutineObject.AddComponent<CoroutineHelper>();
                     state.damageCoroutine = mb.StartCoroutine(ApplyAccumulatedDamageAfterDelay(self));
+                    self.body.AddTimedBuff(RiskofDeath.BuffLoader.Oblivious.BuffData, 1.5f);
+
                 }
             }
             else
