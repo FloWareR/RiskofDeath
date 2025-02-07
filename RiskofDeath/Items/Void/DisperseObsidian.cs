@@ -13,11 +13,10 @@ namespace RiskofDeath.Items.Void
         public override string ItemPick => "Deal bonus damage to enemies at long distance. <color=#ed7fcd>Corrupts all Focus Crystals </color>";
         public override string ItemDesc => "Grants a damage boost against enemies at long range (29.9m). Displays a pulsating effect around the player. <color=#ed7fcd>Corrupts all Focus Crystals </color>";
         public override string ItemLore => "A shard that resonates with the distant echoes of battle.";
-        public override float logbookCameraMinDistance => 5f;
-        public override float logbookCameraMaxDistance => 20f;
+        public override float logbookCameraMinDistance => 4.5f;
+        public override float logbookCameraMaxDistance => 5.5f;
         public override Vector3 logbookFocusPointOffset => Vector3.zero;
         public override Vector3 logbookCameraPositionOffset => Vector3.zero;
-
 
         public override void Init()
         {

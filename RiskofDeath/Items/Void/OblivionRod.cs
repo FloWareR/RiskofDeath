@@ -15,10 +15,10 @@ namespace RiskofDeath.Items.Void
         public override string ItemPick => "Bonus damage to enemies above 90% health, Freezes the enemy health for 1.5s then applies all the damage in a single burst <color=#ed7fcd>Corrupts all crowbars </color>";
         public override string ItemDesc => "Deals bonus damage to enemies above 90% health, Enemies will take 1 damage and the rest will be accumulated and applied 1.5s after the initial hit <color=#ed7fcd>Corrupts all crowbars </color>";
         public override string ItemLore => "A twisted and rusty crowbar, infused with the power of the void";
-        public override float logbookCameraMinDistance => 5f;
-        public override float logbookCameraMaxDistance => 30f;
-        public override Vector3 logbookFocusPointOffset => new Vector3(0, 2.5f, 0);
-        public override Vector3 logbookCameraPositionOffset => new Vector3(0, 2.5f, 0);
+        public override float logbookCameraMinDistance => 15f;
+        public override float logbookCameraMaxDistance => 21f;
+        public override Vector3 logbookFocusPointOffset => new(0f, 5.6f, 0f);
+        public override Vector3 logbookCameraPositionOffset => new(-1f, 5.6f, 0.4f);
 
 
         private const DamageType OblivionRodDamageFlag = (DamageType)0x010000000u;
