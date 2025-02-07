@@ -6,6 +6,7 @@ using On.RoR2.Items;
 using System;
 using HarmonyLib;
 using UnityEngine;
+using HG;
 namespace RiskofDeath.Items
 
 {
@@ -17,7 +18,7 @@ namespace RiskofDeath.Items
         public abstract string ItemPick { get; }
         public abstract string ItemDesc { get; }
         public abstract string ItemLore { get; }
-        public abstract ItemDef ItemToCorrupt { get; }
+        public virtual ItemDef ItemToCorrupt => null;
         public abstract float logbookCameraMinDistance { get; }
         public abstract float logbookCameraMaxDistance { get; }
         public abstract Vector3 logbookFocusPointOffset { get; }
@@ -28,7 +29,6 @@ namespace RiskofDeath.Items
         {
             SetLangToken();
             SetupItem();
-            SetupCorruption();
             Hook();
         }
 
@@ -48,12 +48,10 @@ namespace RiskofDeath.Items
 
         protected void SetupCorruption()
         {
-            if(!ItemToCorrupt) return;
             var tier = ItemData.tier.ToString();
             ItemData._itemTierDef = Addressables.LoadAssetAsync<ItemTierDef>($"RoR2/DLC1/Common/{tier}Def.asset").WaitForCompletion();
             ContagiousItemManager.Init += SetTransformation;
         }
-
         private void SetTransformation(ContagiousItemManager.orig_Init orig)
         {
 

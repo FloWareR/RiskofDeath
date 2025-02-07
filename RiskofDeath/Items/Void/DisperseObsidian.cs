@@ -1,27 +1,31 @@
 ﻿using RoR2;
-using System.Net.Mail;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
-using static UnityEngine.UI.Image;
 
 namespace RiskofDeath.Items.Void
 {
     public class DisperseObsidian : ItemBase
     {
+        public override ItemDef ItemToCorrupt => RoR2Content.Items.NearbyDamageBonus;
         public override ItemDef ItemData => RiskofDeath.Assets.LoadAsset<ItemDef>("disperseobsidian");
         public override string ItemIdentifier => "DisperseObsidian";
         public override string ItemName => "Disperse Obsidian";
         public override string ItemPick => "Deal bonus damage to enemies at long distance. <color=#ed7fcd>Corrupts all Focus Crystals </color>";
         public override string ItemDesc => "Grants a damage boost against enemies at long range (29.9m). Displays a pulsating effect around the player. <color=#ed7fcd>Corrupts all Focus Crystals </color>";
         public override string ItemLore => "A shard that resonates with the distant echoes of battle.";
-        public override ItemDef ItemToCorrupt => RoR2Content.Items.NearbyDamageBonus;
         public override float logbookCameraMinDistance => 5f;
         public override float logbookCameraMaxDistance => 20f;
         public override Vector3 logbookFocusPointOffset => Vector3.zero;
         public override Vector3 logbookCameraPositionOffset => Vector3.zero;
 
 
+        public override void Init()
+        {
+            SetLangToken();
+            SetupItem();
+            SetupCorruption();
+            Hook();
+        }
 
         //Item specifics
         private GameObject ringEffect;
@@ -33,7 +37,7 @@ namespace RiskofDeath.Items.Void
         {
             On.RoR2.CharacterMaster.OnInventoryChanged += OnInventoryChanged;
             On.RoR2.HealthComponent.TakeDamage += OnDamageDealt;
-            LoadPrefab();
+            //LoadPrefab();
         }
 
         public override void Unhook()
