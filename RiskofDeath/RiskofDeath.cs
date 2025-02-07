@@ -34,7 +34,7 @@ namespace RiskofDeath
             LoadResources();
             LoadExpansion();
             LoadItems();
-            //LoadBuffs();
+            LoadBuffs();
         }
 
         private void LoadResources()

@@ -21,11 +21,18 @@ namespace RiskofDeath.Items.Void
         public override Vector3 logbookCameraPositionOffset => new Vector3(0, 2.5f, 0);
 
 
+        private const DamageType OblivionRodDamageFlag = (DamageType)0x010000000u;
 
-        //Item Specifics
         private static readonly float maxAllowedTime = 1.5f;
         private static readonly Dictionary<HealthComponent, EnemyState> enemyStates = new Dictionary<HealthComponent, EnemyState>();
-        private class EnemyState { public float accumulatedDamage; public Coroutine damageCoroutine;  }
+
+        private class EnemyState
+        {
+            public float accumulatedDamage;
+            public Coroutine damageCoroutine;
+            public GameObject attacker;
+            public GameObject inflictor;
+        }
 
         public override void Init()
         {
@@ -34,7 +41,6 @@ namespace RiskofDeath.Items.Void
             SetupCorruption();
             Hook();
         }
-
 
         public override void Hook()
         {
@@ -46,9 +52,14 @@ namespace RiskofDeath.Items.Void
             On.RoR2.HealthComponent.TakeDamage -= OnDamageDealt;
         }
 
-
         private void OnDamageDealt(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
         {
+            if ((damageInfo.damageType & OblivionRodDamageFlag) != 0)
+            {
+                orig(self, damageInfo);
+                return;
+            }
+
             if (damageInfo.attacker == null || !damageInfo.attacker.TryGetComponent<CharacterBody>(out var attackerBody))
             {
                 orig(self, damageInfo);
@@ -68,7 +79,9 @@ namespace RiskofDeath.Items.Void
                 {
                     state = new EnemyState
                     {
-                        accumulatedDamage = 0
+                        accumulatedDamage = 0,
+                        attacker = damageInfo.attacker,
+                        inflictor = damageInfo.inflictor
                     };
                     enemyStates[self] = state;
                 }
@@ -76,39 +89,43 @@ namespace RiskofDeath.Items.Void
                 state.accumulatedDamage += damageInfo.damage * (1 + (inventory.GetItemCount(ItemData) * 0.35f));
                 damageInfo.damageColorIndex = DamageColorIndex.Item;
                 damageInfo.damage = 1;
+
                 if (state.damageCoroutine == null)
                 {
                     GameObject coroutineObject = new GameObject("OblivionRodCoroutine");
                     MonoBehaviour mb = coroutineObject.AddComponent<CoroutineHelper>();
                     state.damageCoroutine = mb.StartCoroutine(ApplyAccumulatedDamageAfterDelay(self));
                     self.body.AddTimedBuff(RiskofDeath.BuffLoader.Oblivious.BuffData, 1.5f);
-
                 }
             }
             else
             {
                 if (enemyStates.TryGetValue(self, out var state) && state.accumulatedDamage > 0)
                 {
-                    ApplyAccumulatedDamageNow(self, state.accumulatedDamage);
+                    ApplyAccumulatedDamageNow(self, state.accumulatedDamage, state.attacker, state.inflictor);
                 }
 
                 enemyStates.Remove(self);
             }
 
-
             orig(self, damageInfo);
         }
 
-        private void ApplyAccumulatedDamageNow(HealthComponent enemy, float damage)
+        private void ApplyAccumulatedDamageNow(HealthComponent enemy, float damage, GameObject attacker, GameObject inflictor)
         {
             if (enemy != null && damage > 0)
             {
                 DamageInfo damageInfo = new DamageInfo
                 {
-                    attacker = null, 
+                    attacker = attacker,
                     damage = damage,
-                    damageType = DamageType.Generic,
-                    damageColorIndex = DamageColorIndex.Item
+                    damageType = OblivionRodDamageFlag,
+                    damageColorIndex = DamageColorIndex.Item,
+                    procCoefficient = 1f,
+                    position = enemy.transform.position,
+                    force = Vector3.zero,
+                    crit = false,
+                    procChainMask = default,
                 };
 
                 enemy.TakeDamage(damageInfo);
@@ -119,21 +136,37 @@ namespace RiskofDeath.Items.Void
         {
             yield return new WaitForSeconds(maxAllowedTime);
 
-            if (target != null && target.health >= 0)
+            if (target != null && target.health > 0)
             {
-                var damageInfo = new DamageInfo
+                if (enemyStates.TryGetValue(target, out var state))
                 {
-                    attacker = null,
-                    damage = enemyStates[target].accumulatedDamage,
-                    procCoefficient = 1f,
-                    position = target.transform.position
-                };
-                damageInfo.damageColorIndex = DamageColorIndex.Void;
-                target.TakeDamage(damageInfo);
-            }
+                    var damageInfo = new DamageInfo
+                    {
+                        attacker = state.attacker,
+                        damage = state.accumulatedDamage,
+                        procCoefficient = 1f,
+                        position = target.transform.position,
+                        damageColorIndex = DamageColorIndex.Void,
+                        damageType = OblivionRodDamageFlag,
+                        force = Vector3.zero,
+                        crit = false,
+                        procChainMask = default,
+                    };
 
-            enemyStates[target].damageCoroutine = null;
-            enemyStates.Remove(target);
+                    target.TakeDamage(damageInfo);
+
+                    state.damageCoroutine = null;
+                    enemyStates.Remove(target);
+                }
+            }
+            else
+            {
+                if (target != null && enemyStates.ContainsKey(target))
+                {
+                    enemyStates[target].damageCoroutine = null;
+                    enemyStates.Remove(target);
+                }
+            }
         }
 
         private class CoroutineHelper : MonoBehaviour
