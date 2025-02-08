@@ -21,7 +21,7 @@ namespace RiskofDeath.Items.Void
         public override Vector3 logbookCameraPositionOffset => new(-1f, 5.6f, 0.4f);
 
 
-        private const DamageType OblivionRodDamageFlag = (DamageType)0x010000000u;
+        private const DamageType OblivionRodDamageFlag = (DamageType)0x4000000u;
 
         private static readonly float maxAllowedTime = 1.5f;
         private static readonly Dictionary<HealthComponent, EnemyState> enemyStates = new Dictionary<HealthComponent, EnemyState>();
