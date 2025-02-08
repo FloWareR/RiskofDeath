@@ -23,6 +23,7 @@ namespace RiskofDeath.Items
         public abstract float logbookCameraMaxDistance { get; }
         public abstract Vector3 logbookFocusPointOffset { get; }
         public abstract Vector3 logbookCameraPositionOffset { get; }
+        public abstract ItemDisplayRuleDict CreateEliteEquipmentDisplayRules(GameObject gameObject);
 
 
         public virtual void Init()
@@ -91,7 +92,7 @@ namespace RiskofDeath.Items
                 }
             }
 
-            ItemAPI.Add(new CustomItem(ItemData, new ItemDisplayRuleDict(null)));
+            ItemAPI.Add(new CustomItem(ItemData, CreateEliteEquipmentDisplayRules(ItemData.pickupModelPrefab)));
         }
 
         public int GetItemCount(CharacterMaster characterMaster)
