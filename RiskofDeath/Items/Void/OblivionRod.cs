@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using static RoR2.CombatDirector;
 
 namespace RiskofDeath.Items.Void
 {

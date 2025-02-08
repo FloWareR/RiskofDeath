@@ -35,10 +35,10 @@ namespace RiskofDeath.Items
         protected void SetLangToken()
         {
             ItemData.name = ItemIdentifier;
-            ItemData.nameToken = "ROD_ITEM_" + ItemIdentifier + "_" + "NAME";
-            ItemData.pickupToken = "ROD_ITEM_" + ItemIdentifier + "_" + "PICK";
-            ItemData.descriptionToken = "ROD_ITEM_" + ItemIdentifier + "_" + "DESC";
-            ItemData.loreToken = "ROD_ITEM_" + ItemIdentifier + "_" + "LORE";
+            ItemData.nameToken = "ROD_ITEM_" + ItemIdentifier + "_NAME";
+            ItemData.pickupToken = "ROD_ITEM_" + ItemIdentifier + "_PICK";
+            ItemData.descriptionToken = "ROD_ITEM_" + ItemIdentifier + "_DESC";
+            ItemData.loreToken = "ROD_ITEM_" + ItemIdentifier + "_LORE";
 
             LanguageAPI.Add(ItemData.nameToken, ItemName);
             LanguageAPI.Add(ItemData.pickupToken, ItemPick);
