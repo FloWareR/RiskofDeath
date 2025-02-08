@@ -36,6 +36,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Elites\Tier1\" />
 	  <Folder Include="StatusEffects\Buffs\" />
 	</ItemGroup>
 

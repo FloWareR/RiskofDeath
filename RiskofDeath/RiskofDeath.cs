@@ -27,6 +27,7 @@ namespace RiskofDeath
 
         public static ItemLoader ItemLoader;
         public static BuffLoader BuffLoader;
+        public static EliteLoader EliteLoader;
 
         public void Awake()
         {
@@ -34,6 +35,7 @@ namespace RiskofDeath
             LoadResources();
             LoadExpansion();
             LoadItems();
+            LoadElites();
             LoadBuffs();
         }
 
@@ -55,13 +57,19 @@ namespace RiskofDeath
         }
         private void LoadItems()
         {
-            ItemLoader = new ItemLoader();
+            ItemLoader = new();
             ItemLoader.Init();
+        }
+
+        private void LoadElites()
+        {
+            EliteLoader = new();
+            EliteLoader.Init();
         }
 
         private void LoadBuffs()
         {
-            BuffLoader = new BuffLoader();
+            BuffLoader = new();
             BuffLoader.Init();
         }
 
