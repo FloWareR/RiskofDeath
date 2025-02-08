@@ -91,6 +91,8 @@ namespace RiskofDeath.Elites
         {
             EliteData.color = EliteColor;
             BuffData.eliteDef = EliteData;
+            EliteData.healthBoostCoefficient = HealthMultiplier;
+            EliteData.damageBoostCoefficient = DamageMultiplier;
 
             Texture2D rampTexture = RiskofDeath.Assets.LoadAsset<Texture2D>(EliteEquipmentRampTexturePath);
             EliteAPI.Add(new CustomElite(EliteData, EliteTiers, rampTexture));

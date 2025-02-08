@@ -1,4 +1,5 @@
-﻿using RoR2;
+﻿using R2API;
+using RoR2;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -168,6 +169,11 @@ namespace RiskofDeath.Items.Void
                     enemyStates.Remove(target);
                 }
             }
+        }
+
+        public override ItemDisplayRuleDict CreateItemDisplayRules(GameObject gameObject)
+        {
+            return null;
         }
 
         private class CoroutineHelper : MonoBehaviour

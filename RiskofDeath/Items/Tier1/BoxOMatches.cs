@@ -1,4 +1,5 @@
-﻿using RoR2;
+﻿using R2API;
+using RoR2;
 using UnityEngine;
 
 namespace RiskofDeath.Items.Tier1
@@ -71,5 +72,9 @@ namespace RiskofDeath.Items.Tier1
 
         }
 
+        public override ItemDisplayRuleDict CreateItemDisplayRules(GameObject gameObject)
+        {
+            return null;
+        }
     }
 }
