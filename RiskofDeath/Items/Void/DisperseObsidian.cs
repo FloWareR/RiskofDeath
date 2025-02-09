@@ -128,7 +128,6 @@ namespace RiskofDeath.Items.Void
             return null;
         }
 
-
         public class IndicatorRingController : MonoBehaviour
         {
             public CharacterBody body;
