@@ -1,4 +1,5 @@
-﻿using RoR2;
+﻿using R2API;
+using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -143,6 +144,10 @@ namespace RiskofDeath.Items.Void
             }
 
             orig(self, damageInfo);
+        }
+        public override ItemDisplayRuleDict CreateItemDisplayRules(GameObject gameObject)
+        {
+            return null;
         }
     }
 }
