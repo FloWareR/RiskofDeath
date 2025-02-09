@@ -9,68 +9,84 @@ namespace RiskofDeath.Elites
 {
     public abstract class EliteBase
     {
-        public BuffDef BuffData = ScriptableObject.CreateInstance<BuffDef>();
-
-        public abstract EliteDef EliteData { get; }
-        public abstract EquipmentDef EquipmentData { get; }
-        public abstract string EliteIdentifier { get; }
         public abstract string EliteName { get; }
-        public abstract string EquipmentName { get; }
-        public abstract string EquipmentPick { get; }
-        public abstract string EquipmentDesc { get; }
-        public abstract string EquipmentLore { get; }
-        public abstract string EliteEquipmentRampTexturePath { get; }
+        public abstract string EliteLangTokenName { get; }
+        public abstract string EliteEquipmentName { get; }
+        public abstract string EliteEquipmentPickupDesc { get; }
+        public abstract string EliteEquipmentFullDescription { get; }
         public abstract Color32 EliteColor { get; }
+
+        public abstract string EliteEquipmentIconPath { get; }
+        //public abstract string EliteEquipmentCrownModelPath { get; }
+        public abstract string EliteEquipmentBuffIconPath { get; }
+        public abstract string EliteEquipmentRampTexturePath { get; }
         public abstract EliteTierDef[] EliteTiers { get; }
+
         public abstract float HealthMultiplier { get; }
         public abstract float DamageMultiplier { get; }
-        public abstract string EquipmentIconPath { get; }
-        public abstract bool HonorArtifactAdjustment { get; }
 
+        public abstract bool HasAdjustedHonourTier { get; }
 
         public virtual void Init()
         {
-            SetLangToken();
-            SetEliteBuff();
-            SetEquipment();
-
+            CreateLang();
+            CreateEliteBuff();
+            CreateEliteEquipment();
+            CreateElite();
+            Hooks();
         }
 
-        public void SetLangToken()
+        public BuffDef eliteBuffDef = ScriptableObject.CreateInstance<BuffDef>();
+        public EquipmentDef equipmentDef = ScriptableObject.CreateInstance<EquipmentDef>();
+        public EliteDef eliteDef = ScriptableObject.CreateInstance<EliteDef>();
+
+        protected void CreateLang()
         {
-            EliteData.name = "ROD_ELITE_" + EliteIdentifier + "_NAME";
-            EliteData.modifierToken = "ROD_ELITE" + EliteIdentifier + "_MOD";
+            LanguageAPI.Add("ELITE_" + EliteLangTokenName + "_MODIFIER", EliteName + " {0}");
+            LanguageAPI.Add("ELITE_" + EliteLangTokenName, EliteName);
 
-            LanguageAPI.Add(EliteData.name, EliteName);
-            LanguageAPI.Add(EliteData.modifierToken, EliteName);
-
-
-            EquipmentData.name = EliteIdentifier +"_equipment";
-            EquipmentData.nameToken = "ROD_EQUIPMENT_" + EliteIdentifier + "_NAME";
-            EquipmentData.pickupToken = "ROD_EQUIPMENT_" + EliteIdentifier + "_PICK";
-            EquipmentData.descriptionToken = "ROD_EQUIPMENT_" + EliteIdentifier + "_DESC";
-            EquipmentData.loreToken = "ROD_EQUIPMENT_" + EliteIdentifier + "_LORE";
-
-            LanguageAPI.Add(EquipmentData.nameToken, EquipmentName);
-            LanguageAPI.Add(EquipmentData.pickupToken, EquipmentPick);
-            LanguageAPI.Add(EquipmentData.descriptionToken, EquipmentDesc);
-            LanguageAPI.Add(EquipmentData.loreToken, EquipmentLore);
+            LanguageAPI.Add("ELITE_EQUIPMENT_" + EliteLangTokenName + "_NAME", EliteEquipmentName);
+            LanguageAPI.Add("ELITE_EQUIPMENT_" + EliteLangTokenName + "_PICKUP", EliteEquipmentPickupDesc);
+            LanguageAPI.Add("ELITE_EQUIPMENT_" + EliteLangTokenName + "_DESCRIPTION", EliteEquipmentFullDescription);
+            LanguageAPI.Add("ELITE_EQUIPMENT_" + EliteLangTokenName + "_LORE", "");
         }
 
-        protected void SetEliteBuff()
-        {
-            BuffData.name = EliteIdentifier;
-            BuffData.canStack = false;
+        public abstract ItemDisplayRuleDict CreateEliteEquipmentDisplayRules(GameObject gameObject);
 
-            var sprite = RiskofDeath.Assets.LoadAsset<Sprite>(EquipmentIconPath);
-            BuffData.iconSprite = sprite;
+        protected void CreateEliteBuff()
+        {
+            eliteBuffDef.name = EliteLangTokenName;
+            eliteBuffDef.canStack = false;
+
+            Sprite sprite = RiskofDeath.Assets.LoadAsset<Sprite>(EliteEquipmentBuffIconPath);
+            eliteBuffDef.iconSprite = sprite;
         }
 
-        protected void SetEquipment()
+        protected void CreateEliteEquipment()
         {
-            EquipmentData.pickupModelPrefab = CreateEliteEquipmentModel(EliteColor);
-            EquipmentData.passiveBuffDef = BuffData;
-            ItemAPI.Add(new CustomEquipment(EquipmentData, new ItemDisplayRuleDict(null)));
+            equipmentDef.name = "ELITE_EQUIPMENT_" + EliteLangTokenName;
+            equipmentDef.nameToken = "ELITE_EQUIPMENT_" + EliteLangTokenName + "_NAME";
+            equipmentDef.pickupToken = "ELITE_EQUIPMENT_" + EliteLangTokenName + "_PICKUP";
+            equipmentDef.descriptionToken = "ELITE_EQUIPMENT_" + EliteLangTokenName + "_DESCRIPTION";
+            equipmentDef.loreToken = "ELITE_EQUIPMENT_" + EliteLangTokenName + "_LORE";
+            equipmentDef.pickupModelPrefab = CreateEliteEquipmentModel(EliteColor);
+
+            if (!EliteEquipmentIconPath.StartsWith("RoR2"))
+            {
+                equipmentDef.pickupIconSprite = RiskofDeath.Assets.LoadAsset<Sprite>(EliteEquipmentIconPath);
+            }
+            else
+            {
+                equipmentDef.pickupIconSprite = Addressables.LoadAssetAsync<Sprite>(EliteEquipmentIconPath).WaitForCompletion();
+            }
+
+            equipmentDef.appearsInSinglePlayer = true;
+            equipmentDef.appearsInMultiPlayer = true;
+            equipmentDef.canDrop = false;
+            equipmentDef.passiveBuffDef = eliteBuffDef;
+            equipmentDef.requiredExpansion = RiskofDeath.riskofdeathExpansion;
+
+            ItemAPI.Add(new CustomEquipment(equipmentDef, new ItemDisplayRuleDict(null)));
         }
 
         public virtual GameObject CreateEliteEquipmentModel(Color32 color)
@@ -87,28 +103,36 @@ namespace RiskofDeath.Elites
             return gameObject;
         }
 
-        protected void SetElite()
+        protected void CreateElite()
         {
-            EliteData.color = EliteColor;
-            BuffData.eliteDef = EliteData;
-            EliteData.healthBoostCoefficient = HealthMultiplier;
-            EliteData.damageBoostCoefficient = DamageMultiplier;
+            eliteDef.name = "ELITE_" + EliteLangTokenName;
+            eliteDef.modifierToken = "ELITE_" + EliteLangTokenName + "_MODIFIER";
+            eliteDef.eliteEquipmentDef = equipmentDef;
+            eliteDef.healthBoostCoefficient = HealthMultiplier;
+            eliteDef.damageBoostCoefficient = DamageMultiplier;
+            eliteDef.shaderEliteRampIndex = 0;
 
             Texture2D rampTexture = RiskofDeath.Assets.LoadAsset<Texture2D>(EliteEquipmentRampTexturePath);
-            EliteAPI.Add(new CustomElite(EliteData, EliteTiers, rampTexture));
-            ContentAddition.AddBuffDef(BuffData);
-            if (!HonorArtifactAdjustment) return;
+            EliteAPI.Add(new CustomElite(eliteDef, EliteTiers, rampTexture));
 
-            EliteDef HonorEliteData = ScriptableObject.CreateInstance<EliteDef>();
-            HonorEliteData.name = EliteData.name;
-            HonorEliteData.modifierToken = EliteData.modifierToken;
-            HonorEliteData.eliteEquipmentDef = EliteData.eliteEquipmentDef;
-            HonorEliteData.healthBoostCoefficient = 2.5f;
-            HonorEliteData.damageBoostCoefficient = 1.5f;
-            HonorEliteData.shaderEliteRampIndex = EliteData.shaderEliteRampIndex;
+            eliteBuffDef.eliteDef = eliteDef;
+            ContentAddition.AddBuffDef(eliteBuffDef);
 
-            EliteTierDef[] honourTiers = EliteAPI.GetCombatDirectorEliteTiers().Where(x => x.eliteTypes.Contains(Addressables.LoadAssetAsync<EliteDef>("RoR2/Base/EliteFire/edFireHonor.asset").WaitForCompletion())).ToArray();
-            EliteAPI.Add(new CustomElite(HonorEliteData, honourTiers, rampTexture));
+            if (HasAdjustedHonourTier)
+            {
+                EliteDef honourEliteDef = ScriptableObject.CreateInstance<EliteDef>();
+                honourEliteDef.name = eliteDef.name;
+                honourEliteDef.modifierToken = eliteDef.modifierToken;
+                honourEliteDef.eliteEquipmentDef = eliteDef.eliteEquipmentDef;
+                honourEliteDef.healthBoostCoefficient = 2.5f;
+                honourEliteDef.damageBoostCoefficient = 1.5f;
+                honourEliteDef.shaderEliteRampIndex = eliteDef.shaderEliteRampIndex;
+
+                EliteTierDef[] honourTiers = EliteAPI.GetCombatDirectorEliteTiers().Where(x => x.eliteTypes.Contains(Addressables.LoadAssetAsync<EliteDef>("RoR2/Base/EliteFire/edFireHonor.asset").WaitForCompletion())).ToArray();
+                EliteAPI.Add(new CustomElite(honourEliteDef, honourTiers, rampTexture));
+            }
         }
+
+        public abstract void Hooks();
     }
 }

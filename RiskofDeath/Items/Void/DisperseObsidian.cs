@@ -1,6 +1,7 @@
 ﻿using R2API;
 using RoR2;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 
 namespace RiskofDeath.Items.Void
@@ -28,16 +29,15 @@ namespace RiskofDeath.Items.Void
         }
 
         //Item specifics
-        private GameObject ringEffect;
-        private GameObject ringPrefab;
+        private static GameObject ringPrefab;
         private const float ringScaleMultiplier = 2.3f;
-        private GameObject effect;
+        private static bool isRingActive;
 
         public override void Hook()
         {
             On.RoR2.CharacterMaster.OnInventoryChanged += OnInventoryChanged;
             On.RoR2.HealthComponent.TakeDamage += OnDamageDealt;
-            //LoadPrefab();
+            LoadPrefab();
         }
 
         public override void Unhook()
@@ -50,55 +50,32 @@ namespace RiskofDeath.Items.Void
         {
             if (ringPrefab) return;
 
-            ringEffect = LegacyResourcesAPI.Load<GameObject>("Prefabs/NetworkedObjects/NearbyDamageBonusIndicator");
-            if (ringPrefab) {
-                Debug.LogWarning("Loaded ringEffect");
-            }
-            else
-            {
-                Debug.LogWarning("NO HAY PREFAB");
-            }
+            ringPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/NearbyDamageBonus/NearbyDamageBonusIndicator.prefab").WaitForCompletion().InstantiateClone("Nuclear Blast Indicator", true);
+            var indicatorMaterial = Object.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/NearbyDamageBonus/matNearbyDamageBonusRangeIndicator.mat").WaitForCompletion());
+            indicatorMaterial.SetColor("_TintColor", new Color32(128, 0, 128, 255));
+            var blastRadius = ringPrefab.transform.Find("Radius, Spherical");
+            blastRadius.GetComponent<MeshRenderer>().material = indicatorMaterial;
+
+            PrefabAPI.RegisterNetworkPrefab(ringPrefab);
         }
 
         private void OnInventoryChanged(On.RoR2.CharacterMaster.orig_OnInventoryChanged orig, CharacterMaster self)
         {
-            orig(self);
             if (!self.inventory) return;
-            var itemCount = self.inventory.GetItemCount(ItemData);
-            if (itemCount > 0)
+            if (self.inventory.GetItemCount(ItemData) > 0)
             {
-                CreateRing(self);
+                isRingActive = true;
+                if (!self.TryGetComponent<IndicatorRingController>(out var controller))
+                {
+                    controller = self.gameObject.AddComponent<IndicatorRingController>();
+                }
 
             }
             else
-            {
-                DestroyRing();
+            { 
+                isRingActive = false;
             }
-        }
-
-        private void CreateRing(CharacterMaster self)
-        {
-            //ringEffect = GameObject.Instantiate(ringPrefab, self.GetBody().corePosition, Quaternion.identity);
-            //if (!ringEffect) return;
-            //Debug.Log("Creating Ring");
-            //if (!ringEffect.TryGetComponent(out NetworkIdentity netId))
-            //{
-            //    netId = ringEffect.AddComponent<NetworkIdentity>();
-            //}
-            //var attachment = ringEffect.GetComponent<NetworkedBodyAttachment>();
-
-            //ringEffect.transform.localScale *= ringScaleMultiplier;
-            //ringEffect.transform.SetParent(self.transform, true);
-            //attachment.AttachToGameObjectAndSpawn(self.gameObject, null);
-        }
-
-        private void DestroyRing()
-        {
-            if (ringEffect != null)
-            {
-                GameObject.Destroy(ringEffect);
-                ringEffect = null;
-            }
+            orig(self);
         }
 
         private void OnDamageDealt(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
@@ -140,14 +117,45 @@ namespace RiskofDeath.Items.Void
             if (distance > 29.9f)
             {
                 damageInfo.damage *= 1 + (0.2f * itemCount);
-                damageInfo.damageColorIndex = DamageColorIndex.Item;
+                damageInfo.damageColorIndex = DamageColorIndex.Void;
             }
 
             orig(self, damageInfo);
         }
+
         public override ItemDisplayRuleDict CreateItemDisplayRules(GameObject gameObject)
         {
             return null;
+        }
+
+        public class IndicatorRingController : MonoBehaviour
+        {
+            public CharacterBody body;
+            public CharacterMaster characterComponent;
+            private GameObject ringIndicator;
+
+            public void Start()
+            {
+                characterComponent = GetComponent<CharacterMaster>();
+                body = characterComponent.GetBody();
+                
+                ringIndicator = Instantiate(DisperseObsidian.ringPrefab);
+                var indicatorRadius = ringIndicator.transform.Find("Radius, Spherical");
+                indicatorRadius.localScale *= ringScaleMultiplier;
+                ringIndicator.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(body.gameObject);
+            }
+
+            public void FixedUpdate()
+            {
+                if (!isRingActive && NetworkServer.active)
+                {
+                    ringIndicator.SetActive(false);
+                }
+                else if(isRingActive  && NetworkServer.active)
+                {
+                    ringIndicator.SetActive(true);
+                }
+            }
         }
     }
 }
