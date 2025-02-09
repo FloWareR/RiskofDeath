@@ -27,24 +27,6 @@ namespace RiskofDeath.Items
         public abstract Vector3 logbookCameraPositionOffset { get; }
         public abstract ItemDisplayRuleDict CreateItemDisplayRules(GameObject gameObject);
 
-        public static string[] modelList = [
-            "mdlCommandoDualies", 
-            "mdlHuntress", 
-            "mdlBandit2", 
-            "mdlToolbot", 
-            "mdlEngi", 
-            "mdlMage", 
-            "mdlMerc", 
-            "mdlTreebot", 
-            "mdlLoader", 
-            "mdlCroco", 
-            "mdlCaptain", 
-            "mdlRailGunner", 
-            "mdlVoidSurvivor", 
-            "mdlSeeker", 
-            "mdlFalseSon", 
-            "mdlChef", 
-            "mdlScav"];
 
         public virtual void Init()
         {
@@ -112,7 +94,8 @@ namespace RiskofDeath.Items
                 }
             }
 
-            ItemAPI.Add(new CustomItem(ItemData, CreateItemDisplayRules(ItemData.pickupModelPrefab)));
+            var itemDisplayRuleDict = CreateItemDisplayRules(ItemData.pickupModelPrefab);
+            ItemAPI.Add(new CustomItem(ItemData, itemDisplayRuleDict));
         }
 
         public int GetItemCount(CharacterMaster characterMaster)
@@ -124,17 +107,5 @@ namespace RiskofDeath.Items
         public abstract void Hook();
 
         public abstract void Unhook();
-
-        protected void AddModelRule(ItemDisplayRuleDict dictionary, GameObject gameObject, string model, Dictionary<string, object> rules){
-            dictionary.Add(model, new ItemDisplayRule
-            {
-                ruleType = ItemDisplayRuleType.ParentedPrefab,
-                followerPrefab = gameObject,
-                childName = (string)rules["childName"],
-                localPos = (Vector3)rules["localPos"],
-                localAngles = (Vector3)rules["localAngles"],
-                localScale = (Vector3)rules["localScale"]
-            });
-        }
     }
 }
