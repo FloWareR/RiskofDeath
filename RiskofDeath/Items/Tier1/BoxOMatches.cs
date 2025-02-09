@@ -24,7 +24,6 @@ namespace RiskofDeath.Items.Tier1
             return DisplayRules.GetBoxOMatches(gameObject);
         }
 
-
         //Item specifics
         private ItemDef _ignitionTank;
         private const float BaseBurnDuration = 1.5f;

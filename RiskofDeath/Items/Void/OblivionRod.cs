@@ -173,7 +173,7 @@ namespace RiskofDeath.Items.Void
 
         public override ItemDisplayRuleDict CreateItemDisplayRules(GameObject gameObject)
         {
-            return null;
+            return DisplayRules.GetOblivionRod(gameObject);
         }
 
         private class CoroutineHelper : MonoBehaviour

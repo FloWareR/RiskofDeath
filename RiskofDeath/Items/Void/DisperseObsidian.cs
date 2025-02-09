@@ -125,7 +125,7 @@ namespace RiskofDeath.Items.Void
 
         public override ItemDisplayRuleDict CreateItemDisplayRules(GameObject gameObject)
         {
-            return null;
+            return DisplayRules.GetDisperseObsidian(gameObject);
         }
 
         public class IndicatorRingController : MonoBehaviour
