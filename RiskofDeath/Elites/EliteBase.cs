@@ -33,7 +33,7 @@ namespace RiskofDeath.Elites
             CreateEliteBuff();
             CreateEliteEquipment();
             CreateElite();
-            Hooks();
+            Hook();
         }
 
         public BuffDef eliteBuffDef = ScriptableObject.CreateInstance<BuffDef>();
@@ -57,6 +57,7 @@ namespace RiskofDeath.Elites
         {
             eliteBuffDef.name = EliteLangTokenName;
             eliteBuffDef.canStack = false;
+           
 
             Sprite sprite = RiskofDeath.Assets.LoadAsset<Sprite>(EliteEquipmentBuffIconPath);
             eliteBuffDef.iconSprite = sprite;
@@ -113,6 +114,7 @@ namespace RiskofDeath.Elites
             eliteDef.shaderEliteRampIndex = 0;
 
             Texture2D rampTexture = RiskofDeath.Assets.LoadAsset<Texture2D>(EliteEquipmentRampTexturePath);
+            //Texture2D defaultRampTexture = Addressables.LoadAssetAsync<Texture2D>("RoR2/Base/Common/ColorRamps/texRampFireElite.png").WaitForCompletion();
             EliteAPI.Add(new CustomElite(eliteDef, EliteTiers, rampTexture));
 
             eliteBuffDef.eliteDef = eliteDef;
@@ -133,6 +135,6 @@ namespace RiskofDeath.Elites
             }
         }
 
-        public abstract void Hooks();
+        public abstract void Hook();
     }
 }
