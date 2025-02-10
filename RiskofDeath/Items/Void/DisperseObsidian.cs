@@ -50,7 +50,7 @@ namespace RiskofDeath.Items.Void
         {
             if (ringPrefab) return;
 
-            ringPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/NearbyDamageBonus/NearbyDamageBonusIndicator.prefab").WaitForCompletion().InstantiateClone("Nuclear Blast Indicator", true);
+            ringPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/NearbyDamageBonus/NearbyDamageBonusIndicator.prefab").WaitForCompletion().InstantiateClone("Disperse Obsidian Indicator", true);
             var indicatorMaterial = Object.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/NearbyDamageBonus/matNearbyDamageBonusRangeIndicator.mat").WaitForCompletion());
             indicatorMaterial.SetColor("_TintColor", new Color32(128, 0, 128, 255));
             var blastRadius = ringPrefab.transform.Find("Radius, Spherical");

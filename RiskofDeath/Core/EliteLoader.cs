@@ -7,6 +7,7 @@ namespace RiskofDeath.Core
     public class EliteLoader
     {
         public static Cursed Cursed;
+
         public void Init()
         {
             Cursed = new();

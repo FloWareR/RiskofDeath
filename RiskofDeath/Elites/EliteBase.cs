@@ -16,8 +16,8 @@ namespace RiskofDeath.Elites
         public abstract string EliteEquipmentFullDescription { get; }
         public abstract Color32 EliteColor { get; }
 
-        public abstract string EliteEquipmentIconPath { get; }
-        //public abstract string EliteEquipmentCrownModelPath { get; }
+        public abstract string EliteEquipmentIconPath { get; } 
+        public abstract string EliteEquipmentCrownModelPath { get; }
         public abstract string EliteEquipmentBuffIconPath { get; }
         public abstract string EliteEquipmentRampTexturePath { get; }
         public abstract EliteTierDef[] EliteTiers { get; }
@@ -33,7 +33,7 @@ namespace RiskofDeath.Elites
             CreateEliteBuff();
             CreateEliteEquipment();
             CreateElite();
-            Hooks();
+            Hook();
         }
 
         public BuffDef eliteBuffDef = ScriptableObject.CreateInstance<BuffDef>();
@@ -57,6 +57,7 @@ namespace RiskofDeath.Elites
         {
             eliteBuffDef.name = EliteLangTokenName;
             eliteBuffDef.canStack = false;
+           
 
             Sprite sprite = RiskofDeath.Assets.LoadAsset<Sprite>(EliteEquipmentBuffIconPath);
             eliteBuffDef.iconSprite = sprite;
@@ -86,7 +87,9 @@ namespace RiskofDeath.Elites
             equipmentDef.passiveBuffDef = eliteBuffDef;
             equipmentDef.requiredExpansion = RiskofDeath.riskofdeathExpansion;
 
-            ItemAPI.Add(new CustomEquipment(equipmentDef, new ItemDisplayRuleDict(null)));
+            var crownModelAsset = RiskofDeath.Assets.LoadAsset<GameObject>(EliteEquipmentCrownModelPath);
+            var itemDisplayRuleDict = CreateEliteEquipmentDisplayRules(crownModelAsset);
+            ItemAPI.Add(new CustomEquipment(equipmentDef, itemDisplayRuleDict));
         }
 
         public virtual GameObject CreateEliteEquipmentModel(Color32 color)
@@ -113,6 +116,7 @@ namespace RiskofDeath.Elites
             eliteDef.shaderEliteRampIndex = 0;
 
             Texture2D rampTexture = RiskofDeath.Assets.LoadAsset<Texture2D>(EliteEquipmentRampTexturePath);
+            //Texture2D defaultRampTexture = Addressables.LoadAssetAsync<Texture2D>("RoR2/Base/Common/ColorRamps/texRampFireElite.png").WaitForCompletion();
             EliteAPI.Add(new CustomElite(eliteDef, EliteTiers, rampTexture));
 
             eliteBuffDef.eliteDef = eliteDef;
@@ -133,6 +137,6 @@ namespace RiskofDeath.Elites
             }
         }
 
-        public abstract void Hooks();
+        public abstract void Hook();
     }
 }

@@ -798,5 +798,37 @@ namespace RiskofDeath.Items
         }
         #endregion
 
+        #region Elites
+        public static ItemDisplayRuleDict GetCursedElite(GameObject prefab)
+        {
+            var itemDisplay = prefab.AddComponent<ItemDisplay>();
+            itemDisplay.rendererInfos = ItemDisplaySetup(prefab);
+            ItemDisplayRuleDict itemRules = new ItemDisplayRuleDict();
+
+            itemRules.Add("mdlCommandoDualies", new ItemDisplayRule[]
+            {
+                new ItemDisplayRule
+                {
+                    childName = "Pelvis",
+                    followerPrefab = prefab,
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    localPos = new Vector3(0.1F, 0.5F, 0F),
+                    localAngles = new Vector3(0F, 0F, 0F),
+                    localScale = new Vector3(0.1F, 0.1F, 0.1F),
+                },
+                new ItemDisplayRule
+                {
+                    childName = "Pelvis",
+                    followerPrefab = prefab,
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    localPos = new Vector3(-0.1F, 0.5F, 0F),
+                    localAngles = new Vector3(0F, 180F, 0F),
+                    localScale = new Vector3(0.1F, 0.1F, 0.1F),
+                }
+            });
+
+            return itemRules;
+        }
+        #endregion
     }
 }
