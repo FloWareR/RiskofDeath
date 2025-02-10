@@ -87,7 +87,9 @@ namespace RiskofDeath.Elites
             equipmentDef.passiveBuffDef = eliteBuffDef;
             equipmentDef.requiredExpansion = RiskofDeath.riskofdeathExpansion;
 
-            ItemAPI.Add(new CustomEquipment(equipmentDef, new ItemDisplayRuleDict(null)));
+            var crownModelAsset = RiskofDeath.Assets.LoadAsset<GameObject>(EliteEquipmentCrownModelPath);
+            var itemDisplayRuleDict = CreateEliteEquipmentDisplayRules(crownModelAsset);
+            ItemAPI.Add(new CustomEquipment(equipmentDef, itemDisplayRuleDict));
         }
 
         public virtual GameObject CreateEliteEquipmentModel(Color32 color)
@@ -95,8 +97,6 @@ namespace RiskofDeath.Elites
             GameObject gameObject = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/EliteFire/PickupEliteFire.prefab").WaitForCompletion().InstantiateClone("PickupAffix" + EliteName, false);
             Material material = Object.Instantiate(gameObject.GetComponentInChildren<MeshRenderer>().material);
             material.color = color;
-            var crownModelAsset = RiskofDeath.Assets.LoadAsset<GameObject>(EliteEquipmentCrownModelPath);
-            var itemDisplayRuleDict = CreateEliteEquipmentDisplayRules(crownModelAsset);
 
             foreach (Renderer renderer in gameObject.GetComponentsInChildren<Renderer>())
             {

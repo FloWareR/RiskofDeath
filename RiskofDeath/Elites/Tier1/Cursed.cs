@@ -72,7 +72,7 @@ namespace RiskofDeath.Elites.Tier1
 
                 var hpLostPercentage = (damageTaken / maxHP);
                 var maxHPLossPercentage = hpLostPercentage * 0.25f;
-                var stacksToAdd = Mathf.FloorToInt(maxHPLossPercentage * 100f); // Convert to percentage-based stacks
+                var stacksToAdd = Mathf.FloorToInt(maxHPLossPercentage * 100f); 
 
                 if (stacksToAdd > 0)
                 {
@@ -83,7 +83,6 @@ namespace RiskofDeath.Elites.Tier1
 
                     Debug.Log($"[Cursed] {victimBody.name} now has {victimBody.GetBuffCount(RoR2Content.Buffs.PermanentCurse)} Permanent Curse stacks.");
 
-                    // Track stacks applied by each attacker
                     if (!cursedEnemiesAndVictims.ContainsKey(attacker))
                     {
                         cursedEnemiesAndVictims[attacker] = new Dictionary<CharacterBody, int>();
@@ -105,7 +104,6 @@ namespace RiskofDeath.Elites.Tier1
 
             if (!victim) return;
 
-            // If this dying character was an attacker, remove its inflicted stacks from all its victims
             if (cursedEnemiesAndVictims.ContainsKey(victim.body))
             {
                 foreach (var affectedVictim in cursedEnemiesAndVictims[victim.body])
@@ -124,7 +122,6 @@ namespace RiskofDeath.Elites.Tier1
                     Debug.Log($"[Cursed] Removed {stacksToRemove} Permanent Curse stacks from {victimBody.name} because {victim.body.name} died.");
                 }
 
-                // Cleanup
                 cursedEnemiesAndVictims.Remove(victim.body);
             }
         }
