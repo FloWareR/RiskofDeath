@@ -1,4 +1,5 @@
 ﻿using R2API;
+using RiskofDeath.Items;
 using RoR2;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,9 @@ namespace RiskofDeath.Elites.Tier1
 
         public override string EliteName => "Cursed";
 
+        public override string EliteEquipmentCrownModelPath => "cursedhorn";
+
+
 
         //Elite specifics
         BuffDef permanentCurseBuff = RoR2Content.Buffs.PermanentCurse;
@@ -41,7 +45,7 @@ namespace RiskofDeath.Elites.Tier1
 
         public override ItemDisplayRuleDict CreateEliteEquipmentDisplayRules(GameObject gameObject)
         {
-            return null;
+            return DisplayRules.GetCursedElite(gameObject);
         }
 
         public override void Hook()

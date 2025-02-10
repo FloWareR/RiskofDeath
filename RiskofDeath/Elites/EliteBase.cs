@@ -16,8 +16,8 @@ namespace RiskofDeath.Elites
         public abstract string EliteEquipmentFullDescription { get; }
         public abstract Color32 EliteColor { get; }
 
-        public abstract string EliteEquipmentIconPath { get; }
-        //public abstract string EliteEquipmentCrownModelPath { get; }
+        public abstract string EliteEquipmentIconPath { get; } 
+        public abstract string EliteEquipmentCrownModelPath { get; }
         public abstract string EliteEquipmentBuffIconPath { get; }
         public abstract string EliteEquipmentRampTexturePath { get; }
         public abstract EliteTierDef[] EliteTiers { get; }
@@ -95,6 +95,8 @@ namespace RiskofDeath.Elites
             GameObject gameObject = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/EliteFire/PickupEliteFire.prefab").WaitForCompletion().InstantiateClone("PickupAffix" + EliteName, false);
             Material material = Object.Instantiate(gameObject.GetComponentInChildren<MeshRenderer>().material);
             material.color = color;
+            var crownModelAsset = RiskofDeath.Assets.LoadAsset<GameObject>(EliteEquipmentCrownModelPath);
+            var itemDisplayRuleDict = CreateEliteEquipmentDisplayRules(crownModelAsset);
 
             foreach (Renderer renderer in gameObject.GetComponentsInChildren<Renderer>())
             {

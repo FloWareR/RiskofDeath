@@ -598,5 +598,13 @@ namespace RiskofDeath.Items
 
         #endregion
 
+        #region Elites
+        public static ItemDisplayRuleDict GetCursedElite(GameObject prefab)
+        {
+            var itemDisplay = prefab.AddComponent<ItemDisplay>();
+            itemDisplay.rendererInfos = ItemDisplaySetup(prefab);
+            return null;
+        }
+        #endregion
     }
 }
