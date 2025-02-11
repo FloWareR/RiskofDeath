@@ -15,6 +15,7 @@ namespace RiskofDeath.Core
         public DisperseObsidian DisperseObsidian;
         public OblivionRod OblivionRod;
         public RustyCleaver RustyCleaver;
+        public PestilentPool PestilentPool;
 
         public void Init()
         {
@@ -31,6 +32,9 @@ namespace RiskofDeath.Core
 
             RustyCleaver = new RustyCleaver();
             rodItems.Add(RustyCleaver);
+
+            PestilentPool = new();
+            rodItems.Add(PestilentPool);
 
             foreach (var item in rodItems)
             {

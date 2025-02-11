@@ -1,44 +1,68 @@
 ﻿using R2API;
 using RoR2;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.Networking;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace RiskofDeath.Items.Tier1
 {
-    public class PestilentPool : ItemBase 
+    public class PestilentPool : ItemBase
     {
-        public override ItemDef ItemData => throw new System.NotImplementedException();
+        public override ItemDef ItemData => RiskofDeath.Assets.LoadAsset<ItemDef>("pestilentpool");
 
-        public override string ItemIdentifier => throw new System.NotImplementedException();
+        public override string ItemIdentifier => "VenomPool";
 
-        public override string ItemName => throw new System.NotImplementedException();
+        public override string ItemName => "Pestilent Pool";
 
-        public override string ItemPick => throw new System.NotImplementedException();
+        public override string ItemPick => "Killing an enemy spawns an acid pool at their location.";
 
-        public override string ItemDesc => throw new System.NotImplementedException();
+        public override string ItemDesc => "Killing an enemy spawns an acid pool at their location, dealing damage over time to enemies in the area.";
 
-        public override string ItemLore => throw new System.NotImplementedException();
+        public override string ItemLore => "A pool of venomous acid, left behind by the fallen.";
 
-        public override float logbookCameraMinDistance => throw new System.NotImplementedException();
+        public override float logbookCameraMinDistance => 1f;
 
-        public override float logbookCameraMaxDistance => throw new System.NotImplementedException();
+        public override float logbookCameraMaxDistance => 5f;
 
-        public override Vector3 logbookFocusPointOffset => throw new System.NotImplementedException();
+        public override Vector3 logbookFocusPointOffset => Vector3.zero;
 
-        public override Vector3 logbookCameraPositionOffset => throw new System.NotImplementedException();
+        public override Vector3 logbookCameraPositionOffset => Vector3.zero;
 
-        public override ItemDisplayRuleDict CreateItemDisplayRules(GameObject gameObject)
+        // Acid pool effect prefab
+        private static GameObject acidPoolEffectPrefab;
+
+        public override void Init()
         {
-            throw new System.NotImplementedException();
+            SetLangToken();
+            SetupItem();
+            Hook();
+            LoadPrefab();
         }
 
         public override void Hook()
         {
-            throw new System.NotImplementedException();
+            GlobalEventManager.onCharacterDeathGlobal += GlobalEventManager_onCharacterDeathGlobal;
         }
 
         public override void Unhook()
         {
-            throw new System.NotImplementedException();
+            GlobalEventManager.onCharacterDeathGlobal -= GlobalEventManager_onCharacterDeathGlobal;
+        }
+
+        private void LoadPrefab()
+        {
+
+        }
+
+        private void GlobalEventManager_onCharacterDeathGlobal(DamageReport report)
+        {
+
+        }
+
+        public override ItemDisplayRuleDict CreateItemDisplayRules(GameObject gameObject)
+        {
+            return null;
         }
     }
 }
