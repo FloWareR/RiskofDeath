@@ -406,6 +406,204 @@ namespace RiskofDeath.Items
         }
         #endregion
 
+        #region Tier3
+        public static ItemDisplayRuleDict GetSniperScope(GameObject prefab)
+        {
+            var itemDisplay = prefab.AddComponent<ItemDisplay>();
+            itemDisplay.rendererInfos = ItemDisplaySetup(prefab);
+            ItemDisplayRuleDict itemRules = new ItemDisplayRuleDict();
+
+            itemRules.Add("mdlCommandoDualies", new ItemDisplayRule
+            {
+                followerPrefab = prefab,
+                ruleType = ItemDisplayRuleType.ParentedPrefab,
+                childName = "GunR",
+                localPos = new Vector3(-0.16513F, 0.08088F, 0.04533F),
+                localAngles = new Vector3(90F, 0F, 0F),
+                localScale = new Vector3(0.05F, 0.05F, 0.05F)
+
+            });
+
+            itemRules.Add("mdlHuntress", new ItemDisplayRule
+            {
+                followerPrefab = prefab,
+                ruleType = ItemDisplayRuleType.ParentedPrefab,
+                childName = "BowBase",
+                localPos = new Vector3(0F, 0F, 0F),
+                localAngles = new Vector3(0F, 0F, 270F),
+                localScale = new Vector3(0.05F, 0.05F, 0.05F)
+
+            });
+
+            itemRules.Add("mdlBandit2", new ItemDisplayRule
+            {
+                followerPrefab = prefab,
+                ruleType = ItemDisplayRuleType.ParentedPrefab,
+                childName = "MainWeapon",
+                localPos = new Vector3(-0.15207F, 0.55329F, 0.05772F),
+                localAngles = new Vector3(359.7786F, 34.84789F, 90.40752F),
+                localScale = new Vector3(0.1F, 0.1F, 0.1F)
+
+            });
+
+            itemRules.Add("mdlToolbot", new ItemDisplayRule
+            {
+                followerPrefab = prefab,
+                ruleType = ItemDisplayRuleType.ParentedPrefab,
+                childName = "Head",
+                localPos = new Vector3(-2.04255F, 2.01534F, 0.33166F),
+                localAngles = new Vector3(331.5265F, 356.3476F, 92.85593F),
+                localScale = new Vector3(1F, 1F, 1F)
+
+            });
+
+            itemRules.Add("mdlEngi", new ItemDisplayRule
+            {
+                followerPrefab = prefab,
+                ruleType = ItemDisplayRuleType.ParentedPrefab,
+                childName = "CannonHeadR",
+                localPos = new Vector3(0.00001F, 0.42969F, 0.24632F),
+                localAngles = new Vector3(359.7713F, 90F, 90.67998F),
+                localScale = new Vector3(0.1F, 0.1F, 0.1F)
+
+            });
+
+            itemRules.Add("mdlMage", new ItemDisplayRule
+            {
+                followerPrefab = prefab,
+                ruleType = ItemDisplayRuleType.ParentedPrefab,
+                childName = "HandR",
+                localPos = new Vector3(-0.0554F, -0.05365F, -0.10326F),
+                localAngles = new Vector3(10.07773F, 98.89804F, 279.8624F),
+                localScale = new Vector3(0.06899F, 0.06899F, 0.06899F)
+
+            });
+
+            itemRules.Add("mdlMerc", new ItemDisplayRule
+            {
+                followerPrefab = prefab,
+                ruleType = ItemDisplayRuleType.ParentedPrefab,
+                childName = "Head",
+                localPos = new Vector3(-0.13251F, 0.15366F, 0.1156F),
+                localAngles = new Vector3(277.7001F, 88.65031F, 358.7781F),
+                localScale = new Vector3(0.05647F, 0.05647F, 0.05647F)
+
+            });
+
+            itemRules.Add("mdlTreebot", new ItemDisplayRule
+            {
+                followerPrefab = prefab,
+                ruleType = ItemDisplayRuleType.ParentedPrefab,
+                childName = "WeaponPlatformEnd",
+                localPos = new Vector3(-0.00088F, -0.40016F, 0.12186F),
+                localAngles = new Vector3(0.22345F, 97.36004F, 266.7143F),
+                localScale = new Vector3(0.2009F, 0.2009F, 0.2009F)
+
+            });
+
+            itemRules.Add("mdlLoader", new ItemDisplayRule
+            {
+                followerPrefab = prefab,
+                ruleType = ItemDisplayRuleType.ParentedPrefab,
+                childName = "MechBase",
+                localPos = new Vector3(-0.1954F, 0.51878F, 0.16892F),
+                localAngles = new Vector3(357.0736F, 89.8873F, 3.16017F),
+                localScale = new Vector3(0.1F, 0.1F, 0.1F)
+
+            });
+
+            itemRules.Add("mdlCroco", new ItemDisplayRule
+            {
+                followerPrefab = prefab,
+                ruleType = ItemDisplayRuleType.ParentedPrefab,
+                childName = "HandR",
+                localPos = new Vector3(0.20771F, -1.23475F, 0.11182F),
+                localAngles = new Vector3(359.0685F, 206.8047F, 150.9109F),
+                localScale = new Vector3(0.57451F, 0.57451F, 0.57451F)
+
+            });
+
+            itemRules.Add("mdlCaptain", new ItemDisplayRule
+            {
+                followerPrefab = prefab,
+                ruleType = ItemDisplayRuleType.ParentedPrefab,
+                childName = "MuzzleGun",
+                localPos = new Vector3(0.00447F, 0.06365F, -0.1104F),
+                localAngles = new Vector3(4.0338F, 90F, 0F),
+                localScale = new Vector3(0.1F, 0.1F, 0.1F)
+
+            });
+
+            itemRules.Add("mdlRailGunner", new ItemDisplayRule
+            {
+                followerPrefab = prefab,
+                ruleType = ItemDisplayRuleType.ParentedPrefab,
+                childName = "MuzzlePistol",
+                localPos = new Vector3(-0.00014F, 0F, -0.21891F),
+                localAngles = new Vector3(86.33965F, 90F, 0F),
+                localScale = new Vector3(0.08397F, 0.08397F, 0.08397F)
+
+            });
+
+            itemRules.Add("mdlVoidSurvivor", new ItemDisplayRule
+            {
+                followerPrefab = prefab,
+                ruleType = ItemDisplayRuleType.ParentedPrefab,
+                childName = "Hand",
+                localPos = new Vector3(-0.00001F, 0.00003F, -0.0794F),
+                localAngles = new Vector3(0F, 270F, 90F),
+                localScale = new Vector3(0.1F, 0.1F, 0.1F)
+
+            });
+
+            itemRules.Add("mdlSeeker", new ItemDisplayRule
+            {
+                followerPrefab = prefab,
+                ruleType = ItemDisplayRuleType.ParentedPrefab,
+                childName = "HandR",
+                localPos = new Vector3(-0.07448F, -0.1223F, 0.00454F),
+                localAngles = new Vector3(1.07539F, 349.0049F, 95.51745F),
+                localScale = new Vector3(0.06277F, 0.06277F, 0.06277F)
+
+            });
+
+            itemRules.Add("mdlFalseSon", new ItemDisplayRule
+            {
+                followerPrefab = prefab,
+                ruleType = ItemDisplayRuleType.ParentedPrefab,
+                childName = "Head",
+                localPos = new Vector3(0.1822F, 0.13927F, -0.04667F),
+                localAngles = new Vector3(90F, 90F, 0F),
+                localScale = new Vector3(0.1F, 0.1F, 0.1F)
+
+            });
+
+            itemRules.Add("mdlChef", new ItemDisplayRule
+            {
+                followerPrefab = prefab,
+                ruleType = ItemDisplayRuleType.ParentedPrefab,
+                childName = "PizzaCutter",
+                localPos = new Vector3(-0.01874F, 0.33175F, -0.04426F),
+                localAngles = new Vector3(2.06721F, 270.8728F, 90.03145F),
+                localScale = new Vector3(0.07298F, 0.07298F, 0.07298F)
+
+            });
+
+            itemRules.Add("mdlScav", new ItemDisplayRule
+            {
+                followerPrefab = prefab,
+                ruleType = ItemDisplayRuleType.ParentedPrefab,
+                childName = "Weapon",
+                localPos = new Vector3(-3.77129F, 3.14459F, 2.18127F),
+                localAngles = new Vector3(358.1877F, 206.944F, 268.6124F),
+                localScale = new Vector3(3F, 3F, 3F)
+
+            });
+
+            return itemRules;
+        }
+        #endregion
+
         #region VoidTier
         public static ItemDisplayRuleDict GetDisperseObsidian(GameObject prefab)
         {

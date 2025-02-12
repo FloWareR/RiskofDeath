@@ -1,6 +1,7 @@
 ﻿using RiskofDeath.Items;
 using RiskofDeath.Items.Tier1;
 using RiskofDeath.Items.Tier2;
+using RiskofDeath.Items.Tier3;
 using RiskofDeath.Items.Void;
 using System.Collections.Generic;
 using System.Data;
@@ -15,7 +16,7 @@ namespace RiskofDeath.Core
         public DisperseObsidian DisperseObsidian;
         public OblivionRod OblivionRod;
         public RustyCleaver RustyCleaver;
-        public PestilentPool PestilentPool;
+        public SniperScope DistanceDMG;
 
         public void Init()
         {
@@ -33,8 +34,8 @@ namespace RiskofDeath.Core
             RustyCleaver = new RustyCleaver();
             rodItems.Add(RustyCleaver);
 
-            PestilentPool = new();
-            rodItems.Add(PestilentPool);
+            DistanceDMG = new SniperScope();
+            rodItems.Add(DistanceDMG);
 
             foreach (var item in rodItems)
             {
