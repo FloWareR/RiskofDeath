@@ -11,8 +11,8 @@ namespace RiskofDeath.Items.Tier3
         public override ItemDef ItemData => RiskofDeath.Assets.LoadAsset<ItemDef>("xiuhtecuhtliidol");
         public override string ItemIdentifier => "XiuhtecuhtliIdol";
         public override string ItemName => "Xiuhtecuhtli Idol";
-        public override string ItemPick => "Chance to ignite other nearby enemies when applying burn.";
-        public override string ItemDesc => "Burn stacks have a 5% chance to ignite all enemies within 12m.";
+        public override string ItemPick => "Dealt a powerful blasts of fire and cripple to enemies when stacking ignition. Recharges over time.";
+        public override string ItemDesc => "After staking(5 or more) ignition to an enemy dealt a blast within 12m(+2 meters per ignition stack) for 2000%(+2000% per stack) base damage. Additionally, enemies burn for 10% blast base damage. Recharges every 20 seconds.";
         public override string ItemLore => "The idol of an ancient fire deity, radiating an intense heat.";
         public override float logbookCameraMinDistance => 3.5f;
         public override float logbookCameraMaxDistance => 5.5f;
@@ -88,7 +88,7 @@ namespace RiskofDeath.Items.Tier3
 
             if (self.inventory.GetItemCount(ItemData) > 0)
             {
-                if (!isBuffSet && !isOnCooldown)
+                if (!isOnCooldown && !body.HasBuff(RiskofDeath.BuffLoader.Idol.BuffData))
                 {
                     body.AddBuff(RiskofDeath.BuffLoader.Idol.BuffData);
                     isBuffSet = true;
@@ -96,12 +96,13 @@ namespace RiskofDeath.Items.Tier3
             }
             else
             {
-                if (isBuffSet)
+                if (body.HasBuff(RiskofDeath.BuffLoader.Idol.BuffData))
                 {
                     body.RemoveBuff(RiskofDeath.BuffLoader.Idol.BuffData);
                     isBuffSet = false;
                 }
             }
+
             orig(self);
         }
 
@@ -134,16 +135,16 @@ namespace RiskofDeath.Items.Tier3
                         if (fireStacks >= 5)
                         {
                             StartCooldown(attackerBody);
-                            TriggerIdolEffect(self.transform.position, attackerBody, fireStacks);
+                            TriggerIdolEffect(self.transform.position, attackerBody, fireStacks, duration, itemCount);
                         }
                     }
                 }
             }
         }
 
-        private void TriggerIdolEffect(Vector3 position, CharacterBody attackerBody, int fireStacks)
+        private void TriggerIdolEffect(Vector3 position, CharacterBody attackerBody, int fireStacks, float duration, int itemCount)
         {
-            var itemCount = GetItemCount(attackerBody.master);
+            float totalDuration = duration + itemCount;
             BlastAttack blastAttack = new BlastAttack
             {
                 attacker = attackerBody.gameObject,
@@ -168,8 +169,8 @@ namespace RiskofDeath.Items.Tier3
                     var body = hit.hurtBox.healthComponent.body;
                     if (body)
                     {
-                        body.AddTimedBuff(RoR2Content.Buffs.Cripple, 10f);
-                        DotController.InflictDot(body.gameObject, attackerBody.gameObject, fireIndex, 10f, blastAttack.baseDamage * 0.1f);
+                        body.AddTimedBuff(RoR2Content.Buffs.Cripple, totalDuration);
+                        DotController.InflictDot(body.gameObject, attackerBody.gameObject, fireIndex, totalDuration, blastAttack.baseDamage * 0.1f);
                     }
                 }
             }
@@ -178,7 +179,7 @@ namespace RiskofDeath.Items.Tier3
             EffectManager.SpawnEffect(ignitePrefab, new EffectData
             {
                 origin = position,
-                scale = idolRadius
+                scale = idolRadius + (2 * fireStacks)
             }, true);
         }
 
@@ -188,7 +189,11 @@ namespace RiskofDeath.Items.Tier3
             {
                 isOnCooldown = true;
 
-                body.RemoveBuff(RiskofDeath.BuffLoader.Idol.BuffData);
+                if (body.HasBuff(RiskofDeath.BuffLoader.Idol.BuffData))
+                {
+                    body.RemoveBuff(RiskofDeath.BuffLoader.Idol.BuffData);
+                }
+
                 body.SetBuffCount(RiskofDeath.BuffLoader.IdolCooldown.BuffData.buffIndex, cooldownDuration);
 
                 body.StartCoroutine(CooldownCoroutine(body));
@@ -202,6 +207,7 @@ namespace RiskofDeath.Items.Tier3
             while (true)
             {
                 if (timer <= 0) break;
+
                 body.SetBuffCount(RiskofDeath.BuffLoader.IdolCooldown.BuffData.buffIndex, timer);
                 timer -= 1;
 
@@ -211,10 +217,12 @@ namespace RiskofDeath.Items.Tier3
             isOnCooldown = false;
 
             body.RemoveBuff(RiskofDeath.BuffLoader.IdolCooldown.BuffData);
-            if (!body.HasBuff(RiskofDeath.BuffLoader.Idol.BuffData))
+
+            if (body.master.inventory.GetItemCount(ItemData) > 0 && !body.HasBuff(RiskofDeath.BuffLoader.Idol.BuffData))
             {
                 body.AddBuff(RiskofDeath.BuffLoader.Idol.BuffData);
             }
+
             yield return null;
         }
     }

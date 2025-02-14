@@ -17,7 +17,7 @@ namespace RiskofDeath
     public class RiskofDeath : BaseUnityPlugin
     {
         public const string PluginGUID = PluginAuthor + "." + PluginName;
-        public const string PluginAuthor = "Floware";
+        public const string PluginAuthor = "Floware&Alphainvicta";
         public const string PluginName = "RiskofDeath";
         public const string PluginVersion = "0.1.0";
 
@@ -46,7 +46,6 @@ namespace RiskofDeath
                 Assets = AssetBundle.LoadFromStream(stream);
             }
         }
-
 
         private void LoadExpansion()
         {
