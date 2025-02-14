@@ -4,7 +4,6 @@ using RiskofDeath.Items.Tier2;
 using RiskofDeath.Items.Tier3;
 using RiskofDeath.Items.Void;
 using System.Collections.Generic;
-using System.Data;
 
 namespace RiskofDeath.Core
 {
@@ -17,6 +16,7 @@ namespace RiskofDeath.Core
         public OblivionRod OblivionRod;
         public RustyCleaver RustyCleaver;
         public SniperScope DistanceDMG;
+        public XiuhtecuhtliIdol XiuhtecuhtliIdol;
 
         public void Init()
         {
@@ -36,6 +36,9 @@ namespace RiskofDeath.Core
 
             DistanceDMG = new SniperScope();
             rodItems.Add(DistanceDMG);
+
+            XiuhtecuhtliIdol = new XiuhtecuhtliIdol();
+            rodItems.Add(XiuhtecuhtliIdol);
 
             foreach (var item in rodItems)
             {

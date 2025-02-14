@@ -12,7 +12,7 @@ namespace RiskofDeath.Items.Tier3
         public override string ItemIdentifier => "SniperScope";
         public override string ItemName => "Sniper scope";
         public override string ItemPick => "Sniper in the building!";
-        public override string ItemDesc => "Increase the damage dealt the further you are with a minimum distance of 30 meters";
+        public override string ItemDesc => "Increase the damage dealt the further you are with a minimum distance of 30 meters.";
         public override string ItemLore => "One man can change the world with a bullet in the right place.";
         public override float logbookCameraMinDistance => 5.5f;
         public override float logbookCameraMaxDistance => 9f;
@@ -116,6 +116,7 @@ namespace RiskofDeath.Items.Tier3
                 float additionalDamage = damageInfo.damage * (itemCount * (distanceBeyondThreshold / 100f));
 
                 damageInfo.damage += additionalDamage;
+                damageInfo.damageColorIndex = DamageColorIndex.WeakPoint;
             }
 
             orig(self, damageInfo);
