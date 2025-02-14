@@ -11,8 +11,8 @@ namespace RiskofDeath.Items.Tier3
         public override ItemDef ItemData => RiskofDeath.Assets.LoadAsset<ItemDef>("xiuhtecuhtliidol");
         public override string ItemIdentifier => "XiuhtecuhtliIdol";
         public override string ItemName => "Xiuhtecuhtli Idol";
-        public override string ItemPick => "Chance to ignites other nearby enemies when applying burn.";
-        public override string ItemDesc => "Burn stacks have 5% chance to ignites all enemies within 12m.";
+        public override string ItemPick => "Chance to ignite other nearby enemies when applying burn.";
+        public override string ItemDesc => "Burn stacks have a 5% chance to ignite all enemies within 12m.";
         public override string ItemLore => "The idol of an ancient fire deity, radiating an intense heat.";
         public override float logbookCameraMinDistance => 3.5f;
         public override float logbookCameraMaxDistance => 5.5f;
@@ -34,12 +34,49 @@ namespace RiskofDeath.Items.Tier3
         {
             On.RoR2.DotController.AddDot += DotController_AddDot;
             On.RoR2.CharacterMaster.OnInventoryChanged += OnInventoryChanged;
+            On.RoR2.Stage.Start += OnStageStart;
         }
 
         public override void Unhook()
         {
             On.RoR2.DotController.AddDot -= DotController_AddDot;
             On.RoR2.CharacterMaster.OnInventoryChanged -= OnInventoryChanged;
+            On.RoR2.Stage.Start -= OnStageStart;
+        }
+
+        private IEnumerator OnStageStart(On.RoR2.Stage.orig_Start orig, Stage self)
+        {
+            yield return orig(self);
+
+            ResetCooldown();
+            ReapplyIdolBuff();
+        }
+
+        private void ResetCooldown()
+        {
+            isOnCooldown = false;
+
+            foreach (var player in PlayerCharacterMasterController.instances)
+            {
+                var body = player.master.GetBody();
+                if (body)
+                {
+                    body.RemoveBuff(RiskofDeath.BuffLoader.IdolCooldown.BuffData);
+                }
+            }
+        }
+
+        private void ReapplyIdolBuff()
+        {
+            foreach (var player in PlayerCharacterMasterController.instances)
+            {
+                var body = player.master.GetBody();
+                if (body && player.master.inventory.GetItemCount(ItemData) > 0)
+                {
+                    body.AddBuff(RiskofDeath.BuffLoader.Idol.BuffData);
+                    isBuffSet = true;
+                }
+            }
         }
 
         private void OnInventoryChanged(On.RoR2.CharacterMaster.orig_OnInventoryChanged orig, CharacterMaster self)
