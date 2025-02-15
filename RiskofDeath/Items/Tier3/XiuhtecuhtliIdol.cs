@@ -121,16 +121,25 @@ namespace RiskofDeath.Items.Tier3
                         int fireStacks;
                         var victimBody = self.victimObject?.GetComponent<CharacterBody>();
 
+                        string burnBuffName = "bdOnFire";
+                        string strongerBurnBuffName = "bdStrongerBurn";
+
                         if (dotIndex == DotController.DotIndex.Burn)
                         {
-                            fireStacks = victimBody.GetBuffCount((BuffIndex)46);
+                            BuffIndex burnBuffIndex = BuffCatalog.FindBuffIndex(burnBuffName);
+                            fireStacks = victimBody.GetBuffCount(burnBuffIndex);
+                            Debug.LogError(victimBody.GetBuffCount(burnBuffIndex));
                             fireIndex = DotController.DotIndex.Burn;
                         }
                         else
                         {
-                            fireStacks = victimBody.GetBuffCount((BuffIndex)95);
+                            BuffIndex strongerBurnBuffIndex = BuffCatalog.FindBuffIndex(strongerBurnBuffName);
+                            fireStacks = victimBody.GetBuffCount(strongerBurnBuffIndex);
+                            Debug.LogError(victimBody.GetBuffCount(strongerBurnBuffIndex));
                             fireIndex = DotController.DotIndex.StrongerBurn;
                         }
+
+                        Debug.LogError(fireStacks);
 
                         if (fireStacks >= 5)
                         {
