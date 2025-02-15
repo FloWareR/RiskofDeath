@@ -17,6 +17,7 @@ namespace RiskofDeath.Core
         public RustyCleaver RustyCleaver;
         public SniperScope DistanceDMG;
         public XiuhtecuhtliIdol XiuhtecuhtliIdol;
+        public BetterTogether BetterTogether;
 
         public void Init()
         {
@@ -39,6 +40,9 @@ namespace RiskofDeath.Core
 
             XiuhtecuhtliIdol = new XiuhtecuhtliIdol();
             rodItems.Add(XiuhtecuhtliIdol);
+
+            BetterTogether = new BetterTogether();
+            rodItems.Add(BetterTogether);
 
             foreach (var item in rodItems)
             {

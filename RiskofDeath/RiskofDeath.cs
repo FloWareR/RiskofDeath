@@ -17,7 +17,7 @@ namespace RiskofDeath
     public class RiskofDeath : BaseUnityPlugin
     {
         public const string PluginGUID = PluginAuthor + "." + PluginName;
-        public const string PluginAuthor = "Floware&Alphainvicta";
+        public const string PluginAuthor = "Floware_Alphainvicta";
         public const string PluginName = "RiskofDeath";
         public const string PluginVersion = "0.1.0";
 
