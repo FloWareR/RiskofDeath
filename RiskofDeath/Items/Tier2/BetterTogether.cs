@@ -78,7 +78,7 @@ namespace RiskofDeath.Items.Tier2
             {
                 int itemCount = body.inventory.GetItemCount(RiskofDeath.ItemLoader.BetterTogether.ItemData);
 
-                int maxAllies = 4 + (2 * itemCount);
+                int maxAllies = 2 + (2 * itemCount);
 
                 float regenPerAlly = 0.10f * (itemCount);
 
