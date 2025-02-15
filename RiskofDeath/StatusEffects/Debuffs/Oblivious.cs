@@ -15,7 +15,7 @@ namespace RiskofDeath.StatusEffects.Debuffs
         public override bool IsCooldown => false;
         public override bool IsDOT => false;
         public override Sprite Sprite => RiskofDeath.Assets.LoadAsset<Sprite>("oblivious");
-        public override Color BuffColor => new Color(237, 127, 205);
+        public override Color BuffColor => new (237, 127, 205);
         public override bool DotResetTimerOnAdd => false;
         public override float DotInterval => 1.0f;
         public override DamageColorIndex DotDamageColorIndex => DamageColorIndex.Void;

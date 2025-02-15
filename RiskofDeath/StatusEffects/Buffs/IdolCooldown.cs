@@ -17,7 +17,7 @@ namespace RiskofDeath.StatusEffects.Buffs
         public override bool IsCooldown => true;
         public override bool IsDOT => false;
         public override Sprite Sprite => RiskofDeath.Assets.LoadAsset<Sprite>("idolBuffCooldown");
-        public override Color BuffColor => new Color(255, 255, 255);
+        public override Color BuffColor => new (255, 255, 255);
         public override bool DotResetTimerOnAdd => false;
         public override float DotInterval => 1.0f;
         public override DamageColorIndex DotDamageColorIndex => DamageColorIndex.Count;

@@ -9,6 +9,7 @@ namespace RiskofDeath.Core
         public Oblivious Oblivious;
         public Idol Idol;
         public IdolCooldown IdolCooldown;
+        public Together Together;
 
         public void Init()
         {
@@ -20,6 +21,9 @@ namespace RiskofDeath.Core
 
             IdolCooldown = new IdolCooldown();
             IdolCooldown.Init();
+
+            Together = new Together();
+            Together.Init();
         }
     }
 }

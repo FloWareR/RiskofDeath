@@ -1,4 +1,5 @@
-﻿using R2API;
+﻿using System.Collections;
+using R2API;
 using RoR2;
 using UnityEngine;
 
@@ -25,11 +26,13 @@ namespace RiskofDeath.Items.Tier2
         public override void Hook()
         {
             On.RoR2.CharacterMaster.OnInventoryChanged += OnInventoryChanged;
+            On.RoR2.Stage.Start += OnStageStart;
         }
 
         public override void Unhook()
         {
             On.RoR2.CharacterMaster.OnInventoryChanged -= OnInventoryChanged;
+            On.RoR2.Stage.Start -= OnStageStart;
         }
 
         private void OnInventoryChanged(On.RoR2.CharacterMaster.orig_OnInventoryChanged orig, CharacterMaster self)
@@ -56,6 +59,23 @@ namespace RiskofDeath.Items.Tier2
                 }
             }
         }
+
+        private IEnumerator OnStageStart(On.RoR2.Stage.orig_Start orig, Stage self)
+        {
+            yield return orig(self);
+
+            foreach (var player in PlayerCharacterMasterController.instances)
+            {
+                CharacterBody body = player.master.GetBody();
+                if (body && body.inventory && body.inventory.GetItemCount(ItemData) > 0)
+                {
+                    if (!body.gameObject.GetComponent<BetterTogetherBehavior>())
+                    {
+                        body.gameObject.AddComponent<BetterTogetherBehavior>();
+                    }
+                }
+            }
+        }
     }
 
     public class BetterTogetherBehavior : MonoBehaviour
@@ -78,10 +98,15 @@ namespace RiskofDeath.Items.Tier2
             {
                 int itemCount = body.inventory.GetItemCount(RiskofDeath.ItemLoader.BetterTogether.ItemData);
 
+                if (itemCount <= 0)
+                {
+                    body.SetBuffCount(RiskofDeath.BuffLoader.Together.BuffData.buffIndex, 0);
+                    body.regen = baseRegen;
+                    return;
+                }
+
                 int maxAllies = 2 + (2 * itemCount);
-
-                float regenPerAlly = 0.10f * (itemCount);
-
+                float regenPerAlly = 0.10f * itemCount;
                 float radius = 10f;
 
                 int allyCount = 0;
@@ -102,8 +127,16 @@ namespace RiskofDeath.Items.Tier2
                 }
 
                 float healthRegenBonus = regenPerAlly * Mathf.Min(allyCount, maxAllies);
-
                 body.regen = baseRegen * (1 + healthRegenBonus);
+
+                if (allyCount > 0)
+                {
+                    body.SetBuffCount(RiskofDeath.BuffLoader.Together.BuffData.buffIndex, allyCount);
+                }
+                else
+                {
+                    body.SetBuffCount(RiskofDeath.BuffLoader.Together.BuffData.buffIndex, 0);
+                }
             }
         }
 
@@ -112,6 +145,7 @@ namespace RiskofDeath.Items.Tier2
             if (body)
             {
                 body.regen = baseRegen;
+                body.SetBuffCount(RiskofDeath.BuffLoader.Together.BuffData.buffIndex, 0);
             }
         }
     }
