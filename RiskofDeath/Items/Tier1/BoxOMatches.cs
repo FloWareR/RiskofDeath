@@ -1,7 +1,6 @@
 ﻿using R2API;
 using RoR2;
 using UnityEngine;
-using System.Collections.Generic;
 
 namespace RiskofDeath.Items.Tier1
 {

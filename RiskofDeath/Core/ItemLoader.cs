@@ -3,6 +3,7 @@ using RiskofDeath.Items.Tier1;
 using RiskofDeath.Items.Tier2;
 using RiskofDeath.Items.Tier3;
 using RiskofDeath.Items.Void;
+using RiskofDeath.Items.NoTier;
 using System.Collections.Generic;
 
 namespace RiskofDeath.Core
@@ -18,6 +19,8 @@ namespace RiskofDeath.Core
         public SniperScope DistanceDMG;
         public XiuhtecuhtliIdol XiuhtecuhtliIdol;
         public BetterTogether BetterTogether;
+        public LockpickingToolKit LockpickingToolKit;
+        public LockpickingToolKitBroken LockpickingToolKitBroken;
 
         public void Init()
         {
@@ -43,6 +46,12 @@ namespace RiskofDeath.Core
 
             BetterTogether = new BetterTogether();
             rodItems.Add(BetterTogether);
+
+            LockpickingToolKit = new LockpickingToolKit();
+            rodItems.Add(LockpickingToolKit);
+
+            LockpickingToolKitBroken = new LockpickingToolKitBroken();
+            rodItems.Add(LockpickingToolKitBroken);
 
             foreach (var item in rodItems)
             {
