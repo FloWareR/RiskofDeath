@@ -10,7 +10,7 @@ namespace RiskofDeath.Items.Tier1
         public override string ItemIdentifier => "LockpickingToolKit";
         public override string ItemName => "Lockpicking Tool Kit";
         public override string ItemPick => "You feel nimble...";
-        public override string ItemDesc => "Allows you to open chests for free.";
+        public override string ItemDesc => "Allows you to open chests for free. Regenerate after stage.";
         public override string ItemLore => "A set of tools passed down from generations of thieves. Use it wisely.";
         public override float logbookCameraMinDistance => 2f;
         public override float logbookCameraMaxDistance => 3f;

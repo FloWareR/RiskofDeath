@@ -1,4 +1,6 @@
-﻿using R2API;
+﻿using System.Collections;
+using R2API;
+using RiskofDeath.Items.Tier2;
 using RoR2;
 using UnityEngine;
 
@@ -25,10 +27,26 @@ namespace RiskofDeath.Items.NoTier
 
         public override void Hook()
         {
+            On.RoR2.Stage.Start += OnStageStart;
         }
         public override void Unhook()
         {
+            On.RoR2.Stage.Start -= OnStageStart;
         }
-        
+
+        private IEnumerator OnStageStart(On.RoR2.Stage.orig_Start orig, Stage self)
+        {
+            yield return orig(self);
+
+            foreach (var player in PlayerCharacterMasterController.instances)
+            {
+                CharacterBody body = player.master.GetBody();
+                if (body && body.inventory && body.inventory.GetItemCount(ItemData) > 0)
+                {
+                    body.inventory.GiveItem(RiskofDeath.ItemLoader.LockpickingToolKit.ItemData, body.inventory.GetItemCount(ItemData));
+                    body.inventory.RemoveItem(ItemData.itemIndex, body.inventory.GetItemCount(ItemData));
+                }
+            }
+        }
     }
 }
