@@ -11,7 +11,7 @@ namespace RiskofDeath.Items.Tier2
         public override string ItemIdentifier => "BetterTogether";
         public override string ItemName => "Better Together";
         public override string ItemPick => "Increase health regeneration for each ally nearby.";
-        public override string ItemDesc => "Gain 10% (+10% per stack) health regeneration for up to 4 (+2 per stack) allies within a 10-meter radius.";
+        public override string ItemDesc => "Gain 10% (+10% per stack) health regeneration for up to 4 (+2 per stack) allies within a 13 meter radius.";
         public override string ItemLore => "Together, we are stronger.";
         public override float logbookCameraMinDistance => 1f;
         public override float logbookCameraMaxDistance => 2f;
@@ -107,7 +107,7 @@ namespace RiskofDeath.Items.Tier2
 
                 int maxAllies = 2 + (2 * itemCount);
                 float regenPerAlly = 0.10f * itemCount;
-                float radius = 10f;
+                float radius = 13f;
 
                 int allyCount = 0;
                 foreach (var allyBody in CharacterBody.readOnlyInstancesList)
