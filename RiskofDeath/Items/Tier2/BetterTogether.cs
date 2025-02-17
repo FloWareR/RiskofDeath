@@ -67,7 +67,7 @@ namespace RiskofDeath.Items.Tier2
             foreach (var player in PlayerCharacterMasterController.instances)
             {
                 CharacterBody body = player.master.GetBody();
-                if (body && body.inventory && body.inventory.GetItemCount(ItemData) > 0)
+                if (body && player.master.inventory.GetItemCount(ItemData) > 0)
                 {
                     if (!body.gameObject.GetComponent<BetterTogetherBehavior>())
                     {

@@ -41,10 +41,10 @@ namespace RiskofDeath.Items.NoTier
             foreach (var player in PlayerCharacterMasterController.instances)
             {
                 CharacterBody body = player.master.GetBody();
-                if (body && body.inventory && body.inventory.GetItemCount(ItemData) > 0)
+                if (body && player.master.inventory.GetItemCount(ItemData) > 0)
                 {
-                    body.inventory.GiveItem(RiskofDeath.ItemLoader.LockpickingToolKit.ItemData, body.inventory.GetItemCount(ItemData));
-                    body.inventory.RemoveItem(ItemData.itemIndex, body.inventory.GetItemCount(ItemData));
+                    body.master.inventory.GiveItem(RiskofDeath.ItemLoader.LockpickingToolKit.ItemData, body.master.inventory.GetItemCount(ItemData));
+                    body.master.inventory.RemoveItem(ItemData.itemIndex, body.master.inventory.GetItemCount(ItemData));
                 }
             }
         }
