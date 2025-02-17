@@ -48,7 +48,7 @@ namespace RiskofDeath.Items.Tier1
             var attacker = report.attackerBody;
             var itemCount = GetItemCount(attacker.master);
             if (itemCount <= 0) return;
-            if (!Util.CheckRoll(5f * itemCount, attacker.master)) return;
+            if (!Util.CheckRoll((5f * itemCount) * report.damageInfo.procCoefficient, attacker.master)) return;
 
             var burnDuration = BaseBurnDuration + (itemCount * BaseBurnStackIncrease);
             var burnDamage = (attacker.baseDamage * BaseDamageMultiplier);
