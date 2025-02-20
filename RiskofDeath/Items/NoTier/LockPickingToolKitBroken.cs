@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using R2API;
-using RiskofDeath.Items.Tier2;
 using RoR2;
 using UnityEngine;
 
@@ -40,11 +39,11 @@ namespace RiskofDeath.Items.NoTier
 
             foreach (var player in PlayerCharacterMasterController.instances)
             {
-                CharacterBody body = player.master.GetBody();
-                if (body && player.master.inventory.GetItemCount(ItemData) > 0)
+                var itemCount = player.master.inventory.GetItemCount(ItemData);
+                if (itemCount > 0)
                 {
-                    body.master.inventory.GiveItem(RiskofDeath.ItemLoader.LockpickingToolKit.ItemData, body.master.inventory.GetItemCount(ItemData));
-                    body.master.inventory.RemoveItem(ItemData.itemIndex, body.master.inventory.GetItemCount(ItemData));
+                    player.master.inventory.GiveItem(RiskofDeath.ItemLoader.LockpickingToolKit.ItemData, itemCount);
+                    player.master.inventory.RemoveItem(ItemData.itemIndex, itemCount);
                 }
             }
         }

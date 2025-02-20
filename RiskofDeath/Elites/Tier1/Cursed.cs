@@ -71,7 +71,7 @@ namespace RiskofDeath.Elites.Tier1
                 if (maxHP <= 0) return;
 
                 var hpLostPercentage = (damageTaken / maxHP);
-                var maxHPLossPercentage = hpLostPercentage * 0.45f;
+                var maxHPLossPercentage = hpLostPercentage * 1f;
                 var stacksToAdd = Mathf.FloorToInt(maxHPLossPercentage * 100f); 
 
                 if (stacksToAdd > 0)
