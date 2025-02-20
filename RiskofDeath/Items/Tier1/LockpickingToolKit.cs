@@ -62,11 +62,6 @@ namespace RiskofDeath.Items.Tier1
                     int itemCount = body.inventory.GetItemCount(ItemData.itemIndex);
                     if (itemCount > 0)
                     {
-                        if (!Util.CheckRoll(10f * (itemCount), body.master))
-                        {
-                            return;
-                        }
-
                         body.inventory.RemoveItem(ItemData.itemIndex, itemCount);
                         body.inventory.GiveItem(RiskofDeath.ItemLoader.LockpickingToolKitBroken.ItemData, itemCount);
 
@@ -76,6 +71,11 @@ namespace RiskofDeath.Items.Tier1
                             RiskofDeath.ItemLoader.LockpickingToolKitBroken.ItemData.itemIndex,
                             CharacterMasterNotificationQueue.TransformationType.Default
                         );
+
+                        if (!Util.CheckRoll(10f * (itemCount), body.master))
+                        {
+                            return;
+                        }
                         self.cost = 0;
                     }
                 }
