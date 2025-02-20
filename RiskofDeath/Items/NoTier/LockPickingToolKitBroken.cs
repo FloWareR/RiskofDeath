@@ -7,11 +7,10 @@ namespace RiskofDeath.Items.NoTier
 {
     public class LockpickingToolKitBroken : ItemBase
     {
-        // Item Definition
         public override ItemDef ItemData => RiskofDeath.Assets.LoadAsset<ItemDef>("lockpickingtoolkitbroken");
         public override string ItemIdentifier => "LockpickingToolKitBroken";
         public override string ItemName => "Lockpicking Tool Kit (Broken)";
-        public override string ItemPick => "...Better luck next time.";
+        public override string ItemPick => "At the start of each stage, it transforms into Lockpicking Tool Kit.";
         public override string ItemDesc => "...";
         public override string ItemLore => "...";
         public override float logbookCameraMinDistance => 0f;
@@ -44,6 +43,13 @@ namespace RiskofDeath.Items.NoTier
                 {
                     player.master.inventory.GiveItem(RiskofDeath.ItemLoader.LockpickingToolKit.ItemData, itemCount);
                     player.master.inventory.RemoveItem(ItemData.itemIndex, itemCount);
+
+                    CharacterMasterNotificationQueue.SendTransformNotification(
+                                player.master,
+                                ItemData.itemIndex,
+                                RiskofDeath.ItemLoader.LockpickingToolKit.ItemData.itemIndex,
+                                CharacterMasterNotificationQueue.TransformationType.Default
+                            );
                 }
             }
         }

@@ -36,7 +36,6 @@ namespace RiskofDeath.Items.Tier1
 
         private bool OverrideCanBeAfforded(On.RoR2.PurchaseInteraction.orig_CanBeAffordedByInteractor orig, PurchaseInteraction self, Interactor activator)
         {
-            // Check if the interactable is a chest
             if (IsChest(self))
             {
                 CharacterBody body = activator.GetComponent<CharacterBody>();
@@ -55,7 +54,6 @@ namespace RiskofDeath.Items.Tier1
 
         private void OnChestOpened(On.RoR2.PurchaseInteraction.orig_OnInteractionBegin orig, PurchaseInteraction self, Interactor activator)
         {
-            // Check if the interactable is a chest
             if (IsChest(self))
             {
                 CharacterBody body = activator.GetComponent<CharacterBody>();
@@ -64,20 +62,20 @@ namespace RiskofDeath.Items.Tier1
                     int itemCount = body.inventory.GetItemCount(ItemData.itemIndex);
                     if (itemCount > 0)
                     {
-                        if (!Util.CheckRoll(10f, body.master))
+                        if (!Util.CheckRoll(10f * (itemCount), body.master))
                         {
-                            body.inventory.RemoveItem(ItemData.itemIndex, 1);
-                            body.inventory.GiveItem(RiskofDeath.ItemLoader.LockpickingToolKitBroken.ItemData, 1);
-
-                            CharacterMasterNotificationQueue.SendTransformNotification(
-                                body.master,
-                                ItemData.itemIndex,
-                                RiskofDeath.ItemLoader.LockpickingToolKitBroken.ItemData.itemIndex,
-                                CharacterMasterNotificationQueue.TransformationType.Default
-                            );
-
                             return;
                         }
+
+                        body.inventory.RemoveItem(ItemData.itemIndex, itemCount);
+                        body.inventory.GiveItem(RiskofDeath.ItemLoader.LockpickingToolKitBroken.ItemData, itemCount);
+
+                        CharacterMasterNotificationQueue.SendTransformNotification(
+                            body.master,
+                            ItemData.itemIndex,
+                            RiskofDeath.ItemLoader.LockpickingToolKitBroken.ItemData.itemIndex,
+                            CharacterMasterNotificationQueue.TransformationType.Default
+                        );
                         self.cost = 0;
                     }
                 }
