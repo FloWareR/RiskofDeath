@@ -21,7 +21,6 @@ namespace RiskofDeath.Items.Tier3
 
         private const float idolRadius = 12f;
         private const int cooldownDuration = 20;
-        private static bool isBuffSet;
         private static bool isOnCooldown;
         private static DotController.DotIndex fireIndex;
 
@@ -74,7 +73,6 @@ namespace RiskofDeath.Items.Tier3
                 if (body && player.master.inventory.GetItemCount(ItemData) > 0)
                 {
                     body.AddBuff(RiskofDeath.BuffLoader.Idol.BuffData);
-                    isBuffSet = true;
                 }
             }
         }
@@ -91,7 +89,6 @@ namespace RiskofDeath.Items.Tier3
                 if (!isOnCooldown && !body.HasBuff(RiskofDeath.BuffLoader.Idol.BuffData))
                 {
                     body.AddBuff(RiskofDeath.BuffLoader.Idol.BuffData);
-                    isBuffSet = true;
                 }
             }
             else
@@ -99,7 +96,6 @@ namespace RiskofDeath.Items.Tier3
                 if (body.HasBuff(RiskofDeath.BuffLoader.Idol.BuffData))
                 {
                     body.RemoveBuff(RiskofDeath.BuffLoader.Idol.BuffData);
-                    isBuffSet = false;
                 }
             }
 

@@ -1638,8 +1638,8 @@ namespace RiskofDeath.Items
                     followerPrefab = prefab,
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     childName = "Head",
-                    localPos = new Vector3(0.07893F, 0.2023F, -0.08553F),
-                    localAngles = new Vector3(0F, 0F, 354.3904F),
+                    localPos = new Vector3(0.09567F, 0.20247F, -0.08563F),
+                    localAngles = new Vector3(0F, 0F, 0F),
                     localScale = new Vector3(0.1F, 0.1F, 0.1F)
 
                 },
@@ -1648,8 +1648,8 @@ namespace RiskofDeath.Items
                     followerPrefab = prefab,
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     childName = "Head",
-                    localPos = new Vector3(-0.07893F, 0.2023F, -0.08553F),
-                    localAngles = new Vector3(0.09448F, 182.007F, 354.3904F),
+                    localPos = new Vector3(-0.11246F, 0.20219F, -0.08548F),
+                    localAngles = new Vector3(0.09448F, 182.007F, 0F),
                     localScale = new Vector3(0.1F, 0.1F, 0.1F)
 
                 }
@@ -1686,8 +1686,8 @@ namespace RiskofDeath.Items
                     followerPrefab = prefab,
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     childName = "Head",
-                    localPos = new Vector3(1.14142F, 1.17352F, -0.0319F),
-                    localAngles = new Vector3(52.18505F, 0.73549F, 357.8897F),
+                    localPos = new Vector3(1.14075F, 1.54549F, 0.52143F),
+                    localAngles = new Vector3(50.00001F, 0F, 0F),
                     localScale = new Vector3(1.5F, 1.5F, 1.5F)
 
                 },
@@ -1696,8 +1696,8 @@ namespace RiskofDeath.Items
                     followerPrefab = prefab,
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     childName = "Head",
-                    localPos = new Vector3(-0.28221F, 1.30215F, -0.23344F),
-                    localAngles = new Vector3(304.4953F, 179.5544F, 347.3702F),
+                    localPos = new Vector3(-1.14075F, 1.54549F, 0.52143F),
+                    localAngles = new Vector3(308.9973F, 179.7816F, 358.6743F),
                     localScale = new Vector3(1.5F, 1.5F, 1.5F)
 
                 }
@@ -1974,8 +1974,8 @@ namespace RiskofDeath.Items
                     followerPrefab = prefab,
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     childName = "Head",
-                    localPos = new Vector3(-0.2146F, 0.01313F, 0.11352F),
-                    localAngles = new Vector3(85.68816F, 39.85076F, 119.3247F),
+                    localPos = new Vector3(-0.58114F, -0.12739F, 0.11436F),
+                    localAngles = new Vector3(84.82082F, 307.0061F, 26.68633F),
                     localScale = new Vector3(0.2F, 0.2F, 0.2F)
 
                 },
@@ -1984,7 +1984,7 @@ namespace RiskofDeath.Items
                     followerPrefab = prefab,
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     childName = "Head",
-                    localPos = new Vector3(-0.2005F, -0.00555F, -0.13256F),
+                    localPos = new Vector3(-0.58114F, -0.12739F, -0.11436F),
                     localAngles = new Vector3(274.4655F, 121.0445F, 321.8722F),
                     localScale = new Vector3(0.2F, 0.2F, 0.2F)
 
@@ -2047,7 +2047,7 @@ namespace RiskofDeath.Items
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     childName = "Head",
                     localPos = new Vector3(0.72109F, -0.00455F, 0.06069F),
-                    localAngles = new Vector3(88.11903F, 89.74161F, 83.16888F),
+                    localAngles = new Vector3(61.02067F, 171.2456F, 165.1444F),
                     localScale = new Vector3(1F, 1F, 1F)
 
                 },
@@ -2057,7 +2057,7 @@ namespace RiskofDeath.Items
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     childName = "Head",
                     localPos = new Vector3(-0.72109F, -0.00455F, 0.06069F),
-                    localAngles = new Vector3(271.185F, 84.38835F, 91.47202F),
+                    localAngles = new Vector3(300.0179F, 357.5317F, 178.7104F),
                     localScale = new Vector3(1F, 1F, 1F)
 
                 }
@@ -2093,9 +2093,9 @@ namespace RiskofDeath.Items
                 {
                     followerPrefab = prefab,
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
-                    childName = "Chain",
-                    localPos = new Vector3(-0.52882F, 0.63962F, 0.8703F),
-                    localAngles = new Vector3(-0.00008F, 73.87173F, 180.0003F),
+                    childName = "ShieldL",
+                    localPos = new Vector3(0.1449F, -0.15316F, -0.03757F),
+                    localAngles = new Vector3(0F, 180F, 180F),
                     localScale = new Vector3(1F, 1F, 1F)
 
                 },
@@ -2103,9 +2103,9 @@ namespace RiskofDeath.Items
                 {
                     followerPrefab = prefab,
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
-                    childName = "Chain",
-                    localPos = new Vector3(0.54123F, 0.63969F, -1.07891F),
-                    localAngles = new Vector3(-0.00043F, 236.8977F, 180.0002F),
+                    childName = "ShieldR",
+                    localPos = new Vector3(-0.09923F, -0.13911F, 0.03757F),
+                    localAngles = new Vector3(0F, 0F, 180F),
                     localScale = new Vector3(1F, 1F, 1F)
 
                 }
@@ -2191,7 +2191,7 @@ namespace RiskofDeath.Items
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     childName = "Center",
                     localPos = new Vector3(1.31197F, 0.5264F, 0.18599F),
-                    localAngles = new Vector3(0.05204F, 359.0919F, 9.68002F),
+                    localAngles = new Vector3(0F, 0F, 0F),
                     localScale = new Vector3(0.7F, 0.7F, 0.7F)
 
                 },
@@ -2201,7 +2201,7 @@ namespace RiskofDeath.Items
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     childName = "Center",
                     localPos = new Vector3(-1.31197F, 0.5264F, 0.06122F),
-                    localAngles = new Vector3(0.00401F, 181.209F, 8.74318F),
+                    localAngles = new Vector3(0F, 180F, 0F),
                     localScale = new Vector3(0.7F, 0.7F, 0.7F)
 
                 }
@@ -2249,7 +2249,7 @@ namespace RiskofDeath.Items
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     childName = "Torso",
                     localPos = new Vector3(-0.13155F, 0.31799F, 0.06122F),
-                    localAngles = new Vector3(0F, 180F, 0F),
+                    localAngles = new Vector3(3.85251F, 179.888F, 359.3211F),
                     localScale = new Vector3(0.1F, 0.1F, 0.1F)
 
                 }
@@ -2287,7 +2287,7 @@ namespace RiskofDeath.Items
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     childName = "Head",
                     localPos = new Vector3(1.28069F, 0.00004F, -0.00008F),
-                    localAngles = new Vector3(90F, 0F, 0F),
+                    localAngles = new Vector3(87.74883F, 0.00006F, 0.00006F),
                     localScale = new Vector3(1F, 1F, 1F)
 
                 },
@@ -2359,7 +2359,7 @@ namespace RiskofDeath.Items
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     childName = "Head",
                     localPos = new Vector3(0.64639F, 0.75184F, -0.0371F),
-                    localAngles = new Vector3(0F, 0F, 5.19797F),
+                    localAngles = new Vector3(0F, 0F, 0F),
                     localScale = new Vector3(0.4F, 0.4F, 0.4F)
 
                 },
@@ -2369,7 +2369,7 @@ namespace RiskofDeath.Items
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     childName = "Head",
                     localPos = new Vector3(-0.64639F, 0.75184F, -0.0371F),
-                    localAngles = new Vector3(-0.00001F, 180F, 2.90551F),
+                    localAngles = new Vector3(0F, 180F, 0F),
                     localScale = new Vector3(0.4F, 0.4F, 0.4F)
 
                 }
@@ -2405,9 +2405,9 @@ namespace RiskofDeath.Items
                 {
                     followerPrefab = prefab,
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
-                    childName = "Mask",
-                    localPos = new Vector3(1.04961F, -0.48584F, 1.21916F),
-                    localAngles = new Vector3(90F, 0F, 0F),
+                    childName = "Head",
+                    localPos = new Vector3(1.07711F, 1.311F, 0.47994F),
+                    localAngles = new Vector3(0F, 0F, 0F),
                     localScale = new Vector3(1F, 1F, 1F)
 
                 },
@@ -2415,9 +2415,9 @@ namespace RiskofDeath.Items
                 {
                     followerPrefab = prefab,
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
-                    childName = "Mask",
-                    localPos = new Vector3(-1.04961F, -0.48584F, 1.21916F),
-                    localAngles = new Vector3(270F, 180F, 0F),
+                    childName = "Head",
+                    localPos = new Vector3(-1.07711F, 1.311F, 0.47994F),
+                    localAngles = new Vector3(0F, 180F, 0F),
                     localScale = new Vector3(1F, 1F, 1F)
 
                 }
@@ -2574,8 +2574,8 @@ namespace RiskofDeath.Items
                     followerPrefab = prefab,
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     childName = "Hull2",
-                    localPos = new Vector3(0.68472F, 0.11371F, 0.01025F),
-                    localAngles = new Vector3(0F, 0F, 0F),
+                    localPos = new Vector3(-0.04507F, 0.1195F, 0.64868F),
+                    localAngles = new Vector3(0F, 270F, 0F),
                     localScale = new Vector3(0.5F, 0.5F, 0.5F)
 
                 },
@@ -2584,8 +2584,8 @@ namespace RiskofDeath.Items
                     followerPrefab = prefab,
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     childName = "Hull2",
-                    localPos = new Vector3(-0.68472F, 0.25568F, 0.06122F),
-                    localAngles = new Vector3(0F, 180F, 0F),
+                    localPos = new Vector3(-0.04507F, 0.1195F, -0.64868F),
+                    localAngles = new Vector3(0F, 90F, 0F),
                     localScale = new Vector3(0.5F, 0.5F, 0.5F)
 
                 }
@@ -2743,7 +2743,7 @@ namespace RiskofDeath.Items
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     childName = "Chest",
                     localPos = new Vector3(6.89633F, 1.24636F, 0.50014F),
-                    localAngles = new Vector3(0.47671F, 354.6756F, 10.19843F),
+                    localAngles = new Vector3(35F, 0F, 0F),
                     localScale = new Vector3(3F, 3F, 3F)
 
                 },
@@ -2753,7 +2753,7 @@ namespace RiskofDeath.Items
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     childName = "Chest",
                     localPos = new Vector3(-6.89633F, 1.24636F, 0.50014F),
-                    localAngles = new Vector3(359.3986F, 186.0365F, 11.36971F),
+                    localAngles = new Vector3(325F, 180F, 0F),
                     localScale = new Vector3(3F, 3F, 3F)
 
                 }

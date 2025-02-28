@@ -1,4 +1,5 @@
-﻿using R2API;
+﻿using System;
+using R2API;
 using RoR2;
 using UnityEngine;
 
@@ -38,7 +39,7 @@ namespace RiskofDeath.Items.Tier1
         {
             GlobalEventManager.onServerDamageDealt -= GlobalEventManager_onServerDamageDealt;
         }
-
+        
         private void GlobalEventManager_onServerDamageDealt(DamageReport report)
         {
             if (!_ignitionTank) _ignitionTank = ItemCatalog.GetItemDef(ItemCatalog.FindItemIndex("StrengthenBurn"));
